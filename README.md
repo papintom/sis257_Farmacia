@@ -5,11 +5,6 @@ El presente proyecto consiste en el desarrollo de un sistema web para la gestió
 El sistema busca automatizar procesos manuales, reducir errores en el control de stock y mejorar la eficiencia en la atención al cliente.
 
 Modelo de BD
-Categoría
-id_categoria (PK)
-nombre
-descripcion
-
 Proveedor
 id_proveedor (PK)
 nombre
@@ -56,3 +51,8 @@ id_medicamento (FK)
 cantidad
 precio_unitario
 subtotal
+Categoría
+
+id_categoria (PK)
+nombre
+descripcion
