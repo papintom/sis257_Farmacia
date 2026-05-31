@@ -55,4 +55,17 @@ export class ClienteService {
     const cliente = await this.findOne(id);
     return this.clienteRepository.softRemove(cliente);
   }
+
+  async buscarPorCi(ci: string): Promise<Cliente> {
+
+  const cliente = await this.clienteRepository.findOne({
+    where: { ci },
+  });
+
+  if (!cliente) {
+    throw new NotFoundException('Cliente no encontrado');
+  }
+
+  return cliente;
+}
 }

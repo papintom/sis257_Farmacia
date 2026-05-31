@@ -9,6 +9,8 @@ export class Venta {
 
   @PrimaryGeneratedColumn()
   id: number;
+  @Column({ type: 'varchar', length: 20 })
+  metodoPago: string;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   fecha: Date;

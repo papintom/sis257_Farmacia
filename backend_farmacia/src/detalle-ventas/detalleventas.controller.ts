@@ -31,4 +31,12 @@ export class DetalleVentaController {
   remove(@Param('id') id: string) {
     return this.detalleVentaService.remove(+id);
   }
+  @Get('venta/:idVenta')
+findByVenta(
+  @Param('idVenta') idVenta: string,
+) {
+  return this.detalleVentaService.findByVenta(
+    +idVenta,
+  )
+}
 }

@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { ClienteService } from './clientes.service';
 import { CreateClienteDto } from './dto/create-cliente.dto';
 import { UpdateClienteDto } from './dto/update-cliente.dto';
@@ -15,6 +23,11 @@ export class ClienteController {
   @Get()
   findAll() {
     return this.clienteService.findAll();
+  }
+  
+  @Get('ci/:ci')
+  buscarPorCi(@Param('ci') ci: string) {
+    return this.clienteService.buscarPorCi(ci);
   }
 
   @Get(':id')

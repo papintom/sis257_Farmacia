@@ -43,4 +43,10 @@ export class CreateMedicamentoDto {
   @IsDefined({ message: 'El campo "precio" es obligatorio.' })
   readonly precio: number;
 
+   @ApiProperty()
+  @IsNotEmpty({ message: 'La fotografia es requerido' })
+  @IsString({ message: 'La fotografia debe ser una cadena de texto' })
+  @MaxLength(2000, { message: 'La fotografia no puede tener más de 2000 caracteres' })
+  readonly fotografia: string;
+
 }

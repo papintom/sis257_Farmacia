@@ -23,6 +23,9 @@ export class Medicamento {
 
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   precio: number;
+  
+  @Column('varchar', { length: 2000 })
+  fotografia: string;
 
   @CreateDateColumn({ name: 'fecha_creacion' })
   fechaCreacion: Date;

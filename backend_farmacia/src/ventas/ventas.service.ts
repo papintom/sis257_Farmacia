@@ -2,10 +2,9 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateVentaDto } from './dto/create-venta.dto';
 import { UpdateVentaDto } from './dto/update-venta.dto';
 import { Venta } from './entities/venta.entity';
-import { DetalleVenta } from 'src/detalle-ventas/entities/detalleventa.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Lote } from 'src/lotes/entities/lote.entity';
+
 
 @Injectable()
 export class VentaService {
