@@ -155,22 +155,45 @@ function toggleMode() {
 </template>
 
 <style scoped>
+main {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #f8fbff 0%, #f5f7fb 42%, #eef4fa 100%);
+}
 
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 1rem;
+}
 
 .login-card {
-  background: black;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: var(--admin-surface, #ffffff);
+  padding: 3rem 2rem;
+  border-radius: 12px;
+  box-shadow: var(--admin-shadow, 0 18px 46px rgba(15, 23, 42, 0.09));
   width: 100%;
-  max-width: 400px;
+  max-width: 420px;
+  border: 1px solid var(--admin-border, #dbe4ef);
 }
 
 .login-card h1 {
   text-align: center;
+  margin-bottom: 0.5rem;
+  font-size: 2rem;
+  color: var(--admin-text, #1f2937);
+  font-weight: 700;
+}
+
+.login-card > p {
+  text-align: center;
+  color: var(--admin-muted, #6b7280);
   margin-bottom: 2rem;
-  font-size: 1.5rem;
-  color: hsla(160, 100%, 37%, 1);
+  font-size: 0.95rem;
 }
 
 .form-group {
@@ -181,78 +204,107 @@ function toggleMode() {
 
 .form-group label {
   margin-bottom: 0.5rem;
-  font-weight: 500;
-  color: hsla(160, 100%, 37%, 1);
+  font-weight: 600;
+  color: var(--admin-text, #1f2937);
+  font-size: 0.875rem;
 }
 
-.form-group :deep(input) {
-  padding: 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 1rem;
-  transition: border-color 0.2s;
+.form-group :deep(input),
+.form-group :deep(.p-inputtext) {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--admin-border, #dbe4ef);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  background: var(--admin-surface-soft, #f8fafc);
+  color: var(--admin-text, #1f2937);
+  transition: all 0.2s ease;
 }
 
-.form-group :deep(input:focus) {
-  border-color: #667eea;
+.form-group :deep(input:focus),
+.form-group :deep(.p-inputtext:focus) {
+  border-color: var(--admin-primary, #2563eb);
   outline: none;
+  box-shadow: var(--admin-ring, 0 0 0 4px rgba(37, 99, 235, 0.12));
+  background: var(--admin-surface, #ffffff);
 }
 
-.form-group :deep(input:disabled) {
-  background-color: #f5f5f5;
+.form-group :deep(input:disabled),
+.form-group :deep(.p-inputtext:disabled) {
+  background-color: var(--admin-surface-soft, #f8fafc);
   cursor: not-allowed;
+  opacity: 0.6;
 }
 
 :deep(.p-button) {
   margin-top: 1rem;
-  padding: 0.75rem !important;
-  background-color: hsla(160, 100%, 37%, 1) !important;
-  border: none !important;
+  padding: 0.75rem 1rem !important;
+  background-color: var(--admin-primary, #2563eb) !important;
+  border: 1px solid var(--admin-primary, #2563eb) !important;
   font-weight: 600;
+  border-radius: 8px !important;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
 }
 
-:deep(.p-button:hover) {
-  background-color: rgb(6, 130, 89) !important;
+:deep(.p-button:hover:not(:disabled)) {
+  background-color: var(--admin-primary-dark, #1d4ed8) !important;
+  border-color: var(--admin-primary-dark, #1d4ed8) !important;
+  transform: translateY(-2px);
+  box-shadow: var(--admin-shadow-sm, 0 10px 24px rgba(15, 23, 42, 0.06));
 }
 
 :deep(.p-button:disabled) {
-  background-color: #ccc !important;
+  background-color: var(--admin-muted, #6b7280) !important;
+  border-color: var(--admin-muted, #6b7280) !important;
 }
 
 .error-message {
-  background-color: #fee;
-  border: 1px solid #fcc;
-  color: #c33;
-  padding: 0.75rem;
-  border-radius: 4px;
-  margin-bottom: 1rem;
+  background-color: rgba(220, 38, 38, 0.1);
+  border: 1px solid rgba(220, 38, 38, 0.3);
+  color: var(--admin-danger, #dc2626);
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
   text-align: center;
   font-size: 0.9rem;
+  font-weight: 500;
 }
 
 .toggle-mode {
   text-align: center;
   margin-top: 1.5rem;
   font-size: 0.9rem;
-  color: #666;
+  color: var(--admin-muted, #6b7280);
 }
 
 .link-button {
   background: none;
   border: none;
-  color: hsla(160, 100%, 37%, 1);
+  color: var(--admin-primary, #2563eb);
   cursor: pointer;
-  text-decoration: underline;
+  text-decoration: none;
   font-size: inherit;
   font-weight: 600;
   padding: 0;
+  transition: color 0.2s ease;
 }
 
 .link-button:hover {
-  color: #5568d3;
+  color: var(--admin-primary-dark, #1d4ed8);
+  text-decoration: underline;
 }
 
 .w-full {
   width: 100%;
+}
+
+@media (max-width: 640px) {
+  .login-card {
+    padding: 2rem 1.5rem;
+  }
+
+  .login-card h1 {
+    font-size: 1.5rem;
+  }
 }
 </style>

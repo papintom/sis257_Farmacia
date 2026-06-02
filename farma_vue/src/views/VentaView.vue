@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import AdminLayout from '@/components/Layout/AdminLayout.vue'
 import { computed, onMounted, ref } from 'vue'
 import http from '@/plugins/axios'
 
@@ -193,87 +194,109 @@ onMounted(() => {
 </script>
 
 <template>
-
-    <div class="p-4">
-
-        <h1 class="text-3xl font-bold mb-4">
-            Nueva Venta
-        </h1>
+    <AdminLayout>
+        <div class="page-heading">
+            <div class="page-heading-copy">
+                <span class="page-icon">
+                    <i class="bi bi-cart-check" aria-hidden="true"></i>
+                </span>
+                <div>
+                    <p class="eyebrow mb-1">Operaciones</p>
+                    <h1 class="h3 mb-1">Nueva Venta</h1>
+                    <p class="text-muted mb-0">Registra nuevas ventas y detalles de compra.</p>
+                </div>
+            </div>
+        </div>
 
         <!-- CABECERA -->
+        <section class="panel mt-3">
+            <div class="panel-header">
+                <h2 class="h5 mb-0 section-title">
+                    <i class="bi bi-info-circle" aria-hidden="true"></i>
+                    <span>Información del Cliente</span>
+                </h2>
+            </div>
 
-        <div class="card p-4 mb-4">
-
-            <div class="grid">
-
-                <!-- CLIENTE -->
-
-                <div class="col-12 md:col-6">
-
-                    <label class="font-semibold block mb-2">
-                        CI Cliente
-                    </label>
-
-                    <div class="flex gap-2">
-
-                        <InputText v-model="ciCliente" placeholder="Ingrese CI" class="w-full" />
-
-                        <Button icon="pi pi-search" @click="buscarCliente" />
-                        <Button icon="pi pi-plus" @click="agregarCliente" />
-
+            <div style="padding: 1.5rem;">
+                <div class="grid">
+                    <!-- CLIENTE -->
+                    <div class="col-12 col-md-6">
+                        <label class="form-label">CI Cliente</label>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <InputText v-model="ciCliente" placeholder="Ingrese CI" style="flex: 1;" />
+                            <Button icon="pi pi-search" @click="buscarCliente" />
+                            <Button icon="pi pi-plus" @click="agregarCliente" />
+                        </div>
                     </div>
 
+                    <div class="col-12 col-md-6">
+                        <label class="form-label">Cliente</label>
+                        <InputText :value="cliente ? cliente.nombre + ' ' + cliente.apellido : ''" disabled />
+                    </div>
+
+                    <!-- METODO -->
+                    <div class="col-12 col-md-6">
+                        <label class="form-label">Método de Pago</label>
+                        <Select v-model="metodoPago" :options="metodosPago" placeholder="Seleccione método" />
+                    </div>
                 </div>
-
-                <div class="col-12 md:col-6">
-
-                    <label class="font-semibold block mb-2">
-                        Cliente
-                    </label>
-
-                    <InputText :value="cliente ? cliente.nombre + ' ' + cliente.apellido : ''" disabled
-                        class="w-full" />
-
-                </div>
-
-                <!-- METODO -->
-
-                <div class="col-12 md:col-6">
-
-                    <label>Método Pago</label>
-
-                    <Select v-model="metodoPago" :options="metodosPago" placeholder="Seleccione método"
-                        class="w-full mt-2" />
-
-                </div>
-
             </div>
-
-        </div>
+        </section>
 
         <!-- CONTENIDO -->
-
-        <div class="grid">
-
-            <div class="col-12 md:col-7">
-
+        <div class="row g-3 mt-1">
+            <div class="col-12 col-xl-8">
                 <VentaProductos @agregar="agregarProducto" />
-
             </div>
 
-            <div class="col-12 md:col-5">
-
+            <div class="col-12 col-xl-4">
                 <VentaDetalle :detalleVenta="detalleVenta" :total="total" @eliminar="eliminarProducto" />
-
-                <Button label="Guardar Venta" icon="pi pi-save" class="w-full mt-4" @click="guardarVenta" />
-
+                <Button label="Guardar Venta" icon="pi pi-save" class="btn btn-primary" style="width: 100%; margin-top: 1rem;" @click="guardarVenta" />
             </div>
-
         </div>
 
-    </div>
-
-    <ClienteSave :mostrar="mostrarClienteDialog" :clientes="{}" :modoEdicion="false"
-        @close="mostrarClienteDialog = false" @guardar="mostrarClienteDialog = false" />
-
+        <ClienteSave :mostrar="mostrarClienteDialog" :clientes="{}" :modoEdicion="false"
+            @close="mostrarClienteDialog = false" @guardar="mostrarClienteDialog = false" />
+    </AdminLayout>
 </template>
+
+<style scoped>
+.eyebrow {
+  color: var(--admin-primary);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.mt-1 {
+  margin-top: 0.25rem;
+}
+
+.mt-3 {
+  margin-top: 1rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.col-12 {
+  grid-column: 1 / -1;
+}
+
+.col-md-6 {
+  @media (min-width: 768px) {
+    grid-column: span 6;
+  }
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--admin-text);
+}
+</style>

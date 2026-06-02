@@ -1,9 +1,112 @@
 <script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
+import AdminLayout from '@/components/Layout/AdminLayout.vue'
 </script>
 
 <template>
-  <main>
-    <TheWelcome />
-  </main>
+  <AdminLayout>
+    <div class="page-heading">
+      <div class="page-heading-copy">
+        <span class="page-icon">
+          <i class="bi bi-speedometer2" aria-hidden="true"></i>
+        </span>
+        <div>
+          <p class="eyebrow mb-1">Bienvenida</p>
+          <h1 class="h3 mb-1">Dashboard</h1>
+          <p class="text-muted mb-0">Resumen general del sistema farmacéutico.</p>
+        </div>
+      </div>
+    </div>
+
+    <section class="row g-3 mt-1" aria-label="Dashboard metrics">
+      <div class="col-12 col-sm-6 col-xl-3">
+        <article class="metric-card metric-primary">
+          <div class="metric-top">
+            <span class="metric-label">Total Medicamentos</span>
+            <span class="metric-icon"><i class="bi bi-capsule" aria-hidden="true"></i></span>
+          </div>
+          <div class="metric-value">1,284</div>
+          <div class="metric-meta">
+            <span class="text-success">+5.2%</span>
+            <span>este mes</span>
+          </div>
+        </article>
+      </div>
+
+      <div class="col-12 col-sm-6 col-xl-3">
+        <article class="metric-card metric-success">
+          <div class="metric-top">
+            <span class="metric-label">Ventas</span>
+            <span class="metric-icon"><i class="bi bi-cart-check" aria-hidden="true"></i></span>
+          </div>
+          <div class="metric-value">324</div>
+          <div class="metric-meta">
+            <span class="text-success">+12.8%</span>
+            <span>desde ayer</span>
+          </div>
+        </article>
+      </div>
+
+      <div class="col-12 col-sm-6 col-xl-3">
+        <article class="metric-card metric-warning">
+          <div class="metric-top">
+            <span class="metric-label">Clientes</span>
+            <span class="metric-icon"><i class="bi bi-people" aria-hidden="true"></i></span>
+          </div>
+          <div class="metric-value">8,742</div>
+          <div class="metric-meta">
+            <span class="text-success">+3.1%</span>
+            <span>activos</span>
+          </div>
+        </article>
+      </div>
+
+      <div class="col-12 col-sm-6 col-xl-3">
+        <article class="metric-card metric-danger">
+          <div class="metric-top">
+            <span class="metric-label">Proveedores</span>
+            <span class="metric-icon"><i class="bi bi-building" aria-hidden="true"></i></span>
+          </div>
+          <div class="metric-value">42</div>
+          <div class="metric-meta">
+            <span class="text-success">Activos</span>
+            <span>conectados</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel mt-3">
+      <div class="panel-header">
+        <div>
+          <h2 class="h5 mb-1 section-title">
+            <i class="bi bi-graph-up-arrow" aria-hidden="true"></i>
+            <span>Información del Sistema</span>
+          </h2>
+          <p class="text-muted mb-0">Estado actual de la plataforma farmacéutica.</p>
+        </div>
+      </div>
+
+      <div style="padding: 1.5rem; text-align: center; color: var(--admin-muted);">
+        <p style="margin: 0;">Sistema funcionando correctamente</p>
+        <p style="margin: 0.5rem 0 0; font-size: 0.875rem;">Todos los módulos disponibles</p>
+      </div>
+    </section>
+  </AdminLayout>
 </template>
+
+<style scoped>
+.eyebrow {
+  color: var(--admin-primary);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.mt-1 {
+  margin-top: 0.25rem;
+}
+
+.mt-3 {
+  margin-top: 1rem;
+}
+</style>

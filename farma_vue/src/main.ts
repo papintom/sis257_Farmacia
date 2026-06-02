@@ -1,4 +1,6 @@
+import './assets/css/admin-theme.css'
 import './assets/main.css'
+import './assets/vendors/bootstrap-icons/bootstrap-icons.css'
 import PrimeVue from 'primevue/config'
 import Aura from '@primevue/themes/aura'
 import 'primeicons/primeicons.css'

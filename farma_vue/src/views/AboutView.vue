@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import AdminLayout from '@/components/Layout/AdminLayout.vue'
 import http from '@/plugins/axios'
 
 import Button from 'primevue/button'
@@ -221,295 +222,46 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-gray-100 p-5">
-
-    <!-- TITULO -->
-
-    <div class="mb-5">
-      <h1 class="text-3xl font-bold">
-        Nueva Venta
-      </h1>
-    </div>
-
-    <!-- DATOS -->
-
-    <Card class="mb-4">
-
-      <template #title>
-        Datos de la Venta
-      </template>
-
-      <template #content>
-
-        <div class="grid grid-cols-4 gap-4">
-
-          <!-- CI -->
-
-          <div>
-            <label class="font-semibold block mb-2">
-              CI Cliente
-            </label>
-
-            <div class="flex gap-2">
-
-              <InputText v-model="ciCliente" placeholder="Buscar CI" class="w-full" />
-
-              <Button icon="pi pi-search" @click="buscarCliente" />
-
-            </div>
-
-          </div>
-
-          <!-- CLIENTE -->
-
-          <div>
-            <label class="font-semibold block mb-2">
-              Cliente
-            </label>
-
-            <InputText :value="cliente?.nombre" disabled class="w-full" />
-
-          </div>
-
-          <!-- METODO -->
-
-          <div>
-            <label class="font-semibold block mb-2">
-              Método Pago
-            </label>
-
-            <Select v-model="metodoPago" :options="metodosPago" class="w-full" />
-
-          </div>
-
-          <!-- OBS -->
-
-          <div>
-            <label class="font-semibold block mb-2">
-              Observación
-            </label>
-
-            <InputText v-model="observacion" class="w-full" />
-
-          </div>
-
+  <AdminLayout>
+    <div class="page-heading">
+      <div class="page-heading-copy">
+        <span class="page-icon">
+          <i class="bi bi-tag" aria-hidden="true"></i>
+        </span>
+        <div>
+          <p class="eyebrow mb-1">Gestión</p>
+          <h1 class="h3 mb-1">Categorías</h1>
+          <p class="text-muted mb-0">Administra las categorías de medicamentos y productos disponibles.</p>
         </div>
-
-      </template>
-
-    </Card>
-
-    <!-- CONTENIDO -->
-
-    <div class="grid grid-cols-2 gap-4">
-
-      <!-- PRODUCTOS -->
-
-      <Card>
-
-        <template #title>
-          Agregar Productos
-        </template>
-
-        <template #content>
-
-          <!-- BUSCADOR -->
-
-          <div class="mb-4">
-
-            <InputText v-model="busquedaMedicamento
-              " placeholder="Buscar medicamento..." class="w-full" />
-
-          </div>
-
-          <!-- TABLA -->
-
-          <DataTable :value="lotesFiltrados" paginator :rows="5" tableStyle="min-width: 50rem">
-
-            <Column field="medicamento.nombre" header="Medicamento" />
-
-            <Column field="id" header="Lote" />
-
-            <Column field="fechaVencimiento" header="Vencimiento" />
-
-            <Column field="stock" header="Stock" />
-
-            <Column header="Precio">
-
-              <template #body="{ data }">
-                Bs.
-                {{
-                  data.medicamento
-                    .precio
-                }}
-              </template>
-
-            </Column>
-
-            <Column header="Acción">
-
-              <template #body="{ data }">
-
-                <Button label="Agregar" icon="pi pi-plus" size="small" @click="
-                  agregarProducto(
-                    data,
-                  )
-                  " />
-
-              </template>
-
-            </Column>
-
-          </DataTable>
-
-        </template>
-
-      </Card>
-
-      <!-- DETALLE -->
-
-      <Card>
-
-        <template #title>
-          Detalle Venta
-        </template>
-
-        <template #content>
-
-          <DataTable :value="detalleVenta" paginator :rows="5">
-
-            <Column field="medicamento" header="Medicamento" />
-
-            <Column field="lote" header="Lote" />
-
-            <Column header="Precio">
-
-              <template #body="{ data }">
-                Bs.
-                {{
-                  data.precioUnitario
-                }}
-              </template>
-
-            </Column>
-
-            <!-- CANTIDAD -->
-
-            <Column field="cantidad" header="Cantidad">
-
-              <template #body="{ data }">
-
-                <div class="flex items-center gap-2">
-
-                  <Button icon="pi pi-minus" severity="secondary" size="small" @click="
-                    disminuirCantidad(
-                      data,
-                    )
-                    " />
-
-                  <span>
-                    {{ data.cantidad }}
-                  </span>
-
-                  <Button icon="pi pi-plus" severity="secondary" size="small" @click="
-                    aumentarCantidad(
-                      data,
-                    )
-                    " />
-
-                </div>
-
-              </template>
-
-            </Column>
-
-            <!-- SUBTOTAL -->
-
-            <Column header="Subtotal">
-
-              <template #body="{ data }">
-                Bs.
-                {{ data.subtotal }}
-              </template>
-
-            </Column>
-
-            <!-- ELIMINAR -->
-
-            <Column header="Eliminar">
-
-              <template #body="{ data }">
-
-                <Button icon="pi pi-trash" severity="danger" text @click="
-                  eliminarProducto(
-                    data.id,
-                  )
-                  " />
-
-              </template>
-
-            </Column>
-
-          </DataTable>
-
-          <Divider />
-
-          <!-- TOTALES -->
-
-          <div class="space-y-4">
-
-            <div class="flex justify-between">
-
-              <span>Total</span>
-
-              <span class="font-bold">
-                Bs. {{ total }}
-              </span>
-
-            </div>
-
-            <div class="flex justify-between items-center">
-
-              <span>Descuento</span>
-
-              <InputNumber v-model="descuento" mode="decimal" :minFractionDigits="2" />
-
-            </div>
-
-            <Divider />
-
-            <div class="flex justify-between">
-
-              <span class="text-2xl font-bold">
-                TOTAL:
-              </span>
-
-              <span class="text-3xl font-bold text-green-600">
-                Bs.
-                {{ totalFinal }}
-              </span>
-
-            </div>
-
-          </div>
-
-          <!-- BOTONES -->
-
-          <div class="flex gap-2 mt-5">
-
-            <Button label="Limpiar" severity="secondary" class="w-full" @click="limpiarVenta" />
-
-            <Button label="Guardar Venta" icon="pi pi-save" class="w-full" @click="guardarVenta" />
-
-          </div>
-
-        </template>
-
-      </Card>
-
+      </div>
     </div>
 
-  </div>
+    <section class="panel mt-3">
+      <div class="panel-header">
+        <h2 class="h5 mb-0 section-title">
+          <i class="bi bi-list-ul" aria-hidden="true"></i>
+          <span>Listado de Categorías</span>
+        </h2>
+      </div>
+
+      <div style="padding: 1.5rem; text-align: center; color: var(--admin-muted);">
+        <p style="margin: 0;">Sistema de categorías en desarrollo</p>
+        <p style="margin: 0.5rem 0 0; font-size: 0.875rem;">Próximamente disponible</p>
+      </div>
+    </section>
+  </AdminLayout>
 </template>
 
-<style scoped></style>
+<style scoped>
+.eyebrow {
+  color: var(--admin-primary);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.mt-3 {
+  margin-top: 1rem;
+}
+</style>
+
