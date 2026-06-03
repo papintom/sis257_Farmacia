@@ -1,0 +1,273 @@
+
+<style>
+  @keyframes float {
+    0%,100%{transform:translateY(0) rotate(0deg);}
+    50%{transform:translateY(-18px) rotate(3deg);}
+  }
+  @keyframes pulse-glow {
+    0%,100%{opacity:0.7;}
+    50%{opacity:1;}
+  }
+  @keyframes orbit {
+    from{transform:rotate(0deg) translateX(80px) rotate(0deg);}
+    to{transform:rotate(360deg) translateX(80px) rotate(-360deg);}
+  }
+  @keyframes scan-line {
+    0%{top:-10%;}
+    100%{top:110%;}
+  }
+  @keyframes ember-fall {
+    0%{transform:translateY(-40px) rotate(0deg);opacity:0;}
+    20%{opacity:1;}
+    100%{transform:translateY(340px) rotate(720deg);opacity:0;}
+  }
+  @keyframes badge-pulse {
+    0%,100%{box-shadow:0 0 0 0 rgba(180,60,20,0.0);}
+    50%{box-shadow:0 0 16px 6px rgba(220,80,20,0.45);}
+  }
+  @keyframes stripe-slide {
+    0%{background-position:0 0;}
+    100%{background-position:60px 0;}
+  }
+  @keyframes blink-cross {
+    0%,90%,100%{opacity:1;}
+    95%{opacity:0.2;}
+  }
+
+  .viltrum-bg {
+    position:relative;
+    width:100%;
+    min-height:420px;
+    background: #0a0005;
+    border-radius:12px;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:2rem 1rem 2.5rem;
+    box-sizing:border-box;
+  }
+
+  /* Starfield */
+  .stars {
+    position:absolute;inset:0;pointer-events:none;z-index:0;
+  }
+  .star {
+    position:absolute;border-radius:50%;background:#fff;
+    animation:pulse-glow 2s infinite;
+  }
+
+  /* Scan line */
+  .scan {
+    position:absolute;left:0;width:100%;height:2px;
+    background:linear-gradient(90deg,transparent 0%,rgba(200,50,10,0.5) 40%,rgba(255,100,30,0.8) 50%,rgba(200,50,10,0.5) 60%,transparent 100%);
+    animation:scan-line 4s linear infinite;
+    z-index:1;pointer-events:none;
+  }
+
+  /* Planet Viltrum */
+  .planet-wrap {
+    position:absolute;top:-70px;right:-60px;z-index:1;pointer-events:none;
+    animation:float 7s ease-in-out infinite;
+  }
+  .planet {
+    width:180px;height:180px;border-radius:50%;
+    background:radial-gradient(circle at 35% 35%,#b03010 0%,#6a1505 55%,#300 100%);
+    border:2px solid rgba(220,80,20,0.5);
+    position:relative;
+  }
+  .planet-ring {
+    position:absolute;top:50%;left:50%;
+    width:230px;height:40px;
+    border:4px solid rgba(180,60,10,0.5);
+    border-radius:50%;
+    transform:translate(-50%,-50%) rotateX(75deg);
+  }
+  .planet-dot {
+    position:absolute;border-radius:50%;
+    background:rgba(255,200,100,0.3);
+  }
+
+  /* Embers / particles */
+  .ember {
+    position:absolute;width:6px;height:6px;border-radius:50%;
+    background:rgba(255,100,20,0.9);
+    animation:ember-fall linear infinite;
+    z-index:2;pointer-events:none;
+  }
+
+  /* Center shield */
+  .shield-wrap {
+    position:relative;z-index:3;
+    animation:float 5s ease-in-out infinite;
+    margin-bottom:1.2rem;
+  }
+  .shield {
+    width:80px;height:90px;
+    background:linear-gradient(160deg,#c03010 0%,#7a1a04 60%,#1a0000 100%);
+    clip-path:polygon(50% 0%,100% 20%,100% 75%,50% 100%,0% 75%,0% 20%);
+    display:flex;align-items:center;justify-content:center;
+    animation:badge-pulse 2.5s ease-in-out infinite;
+    position:relative;
+  }
+  .shield-inner {
+    font-size:28px;font-weight:700;color:#fff;
+    text-shadow:0 0 10px rgba(255,150,60,0.8);
+    letter-spacing:-1px;
+    position:relative;z-index:1;
+    font-family:Georgia,serif;
+  }
+  .shield-stripe {
+    position:absolute;bottom:0;left:0;right:0;height:18px;
+    background:repeating-linear-gradient(90deg,rgba(255,200,50,0.4) 0px,rgba(255,200,50,0.4) 8px,transparent 8px,transparent 16px);
+    clip-path:polygon(0 0,100% 0,100% 100%,50% 70%,0 100%);
+    animation:stripe-slide 1.2s linear infinite;
+  }
+
+  /* Cross farmacia */
+  .pharma-cross {
+    position:relative;z-index:3;
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:0.8rem;
+    animation:blink-cross 3s ease-in-out infinite;
+  }
+  .cross-h,.cross-v {
+    position:absolute;background:#2adf7a;border-radius:3px;
+  }
+  .cross-h{width:44px;height:14px;}
+  .cross-v{width:14px;height:44px;}
+  .cross-glow {
+    width:60px;height:60px;border-radius:50%;
+    background:rgba(40,220,100,0.08);
+    border:1.5px solid rgba(40,220,100,0.35);
+  }
+
+  /* Title */
+  .viltrum-title {
+    position:relative;z-index:3;
+    font-family:Georgia,'Times New Roman',serif;
+    font-size:22px;font-weight:700;
+    color:#e8c090;letter-spacing:2px;
+    text-align:center;
+    text-shadow:0 0 18px rgba(200,80,10,0.7);
+    margin-bottom:4px;
+  }
+  .viltrum-sub {
+    position:relative;z-index:3;
+    font-size:13px;font-weight:500;
+    color:#7adf8a;letter-spacing:4px;
+    text-align:center;
+    text-transform:uppercase;
+    text-shadow:0 0 8px rgba(40,200,80,0.6);
+    margin-bottom:1.5rem;
+  }
+
+  /* Info pills */
+  .pills {
+    position:relative;z-index:3;
+    display:flex;gap:10px;flex-wrap:wrap;justify-content:center;
+    margin-bottom:1.2rem;
+  }
+  .pill {
+    padding:5px 14px;border-radius:20px;font-size:12px;font-weight:500;
+    border:1px solid rgba(220,80,20,0.5);
+    color:#f0c080;background:rgba(100,20,5,0.55);
+    letter-spacing:1px;
+  }
+  .pill-green {
+    border-color:rgba(40,200,80,0.5);
+    color:#80f0a0;background:rgba(5,50,20,0.55);
+  }
+
+  /* Tagline */
+  .tagline {
+    position:relative;z-index:3;
+    font-size:11px;color:rgba(180,120,80,0.7);
+    letter-spacing:2px;text-align:center;text-transform:uppercase;
+  }
+
+  /* Orbiting dot */
+  .orbit-wrap {
+    position:absolute;top:50%;left:50%;z-index:2;pointer-events:none;
+    width:0;height:0;
+  }
+  .orbit-dot {
+    width:8px;height:8px;border-radius:50%;margin-top:-4px;
+    animation:orbit 5s linear infinite;
+  }
+</style>
+
+<div class="viltrum-bg" role="img" aria-label="Fondo animado Imperio Viltrumita Farmacia">
+
+  <!-- Stars -->
+  <div class="stars" id="stars"></div>
+
+  <!-- Scan line -->
+  <div class="scan"></div>
+
+  <!-- Planet top-right -->
+  <div class="planet-wrap">
+    <div class="planet">
+      <div class="planet-dot" style="width:30px;height:30px;top:25%;left:20%;"></div>
+      <div class="planet-dot" style="width:15px;height:15px;top:55%;left:60%;"></div>
+      <div class="planet-ring"></div>
+    </div>
+  </div>
+
+  <!-- Embers -->
+  <div id="embers"></div>
+
+  <!-- Orbiting dot around shield area -->
+  <div class="orbit-wrap">
+    <div class="orbit-dot" style="background:#ff6020;animation-duration:4s;"></div>
+    <div class="orbit-dot" style="background:#2adf7a;animation-duration:7s;animation-delay:-3.5s;"></div>
+  </div>
+
+  <!-- Shield -->
+  <div class="shield-wrap">
+    <div class="shield">
+      <span class="shield-inner">V</span>
+      <div class="shield-stripe"></div>
+    </div>
+  </div>
+
+  <!-- Pharma cross -->
+  <div class="pharma-cross">
+    <div class="cross-glow"></div>
+    <div class="cross-h"></div>
+    <div class="cross-v"></div>
+  </div>
+
+  <!-- Title -->
+  <div class="viltrum-title">IMPERIO VILTRUMITA</div>
+  <div class="viltrum-sub">Farmacia Galáctica</div>
+
+  <!-- Pills info -->
+  <div class="pills">
+    <span class="pill">⚔ Fuerza Suprema</span>
+    <span class="pill-green">✚ Salud Cósmica</span>
+    <span class="pill">🪐 Dominio Total</span>
+    <span class="pill-green">⚕ Medicamentos Elite</span>
+  </div>
+
+  <div class="tagline">Conquistando galaxias · Cuidando tu salud</div>
+</div>
+
+<script>
+const bg = document.getElementById('stars');
+for(let i=0;i<60;i++){
+  const s=document.createElement('div');
+  s.className='star';
+  const sz=Math.random()*2.5+0.5;
+  s.style.cssText=`width:${sz}px;height:${sz}px;top:${Math.random()*100}%;left:${Math.random()*100}%;opacity:${Math.random()*0.7+0.2};animation-delay:${Math.random()*3}s;animation-duration:${Math.random()*2+1.5}s;`;
+  bg.appendChild(s);
+}
+const ec=document.getElementById('embers');
+for(let i=0;i<10;i++){
+  const e=document.createElement('div');
+  e.className='ember';
+  e.style.cssText=`left:${Math.random()*100}%;top:-10px;animation-duration:${Math.random()*3+3}s;animation-delay:${Math.random()*4}s;width:${Math.random()*5+3}px;height:${Math.random()*5+3}px;background:rgba(${Math.random()>0.5?'255,100,20':'40,220,100'},0.85);`;
+  ec.appendChild(e);
+}
+</script>
