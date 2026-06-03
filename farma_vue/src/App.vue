@@ -53,5 +53,8 @@ body {
 #app {
   width: 100%;
   height: 100%;
+  max-width: none; /* Elimina cualquier límite de ancho */
+  margin: 0;       /* Asegura que no haya márgenes automáticos */
+  padding: 0;      /* Elimina paddings que puedan venir por defecto */
 }
 </style>
