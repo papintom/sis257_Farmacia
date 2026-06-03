@@ -53,61 +53,43 @@ defineExpose({ obtenerLista })
     <div class="col-7 pl-0 mt-3">
       <InputGroup>
         <InputGroupAddon><i class="pi pi-search"></i></InputGroupAddon>
-        <InputText
-          v-model="busqueda"
-          type="text"
-          placeholder="Buscar por nombre, apellido, correo o contraseña"
-        />
+        <InputText v-model="busqueda" type="text" placeholder="Buscar por nombre, apellido, correo" />
       </InputGroup>
     </div>
-    <table>
-      <thead>
-        <tr>
-          <th>Nro.</th>
-          <th>Nombre</th>
-          <th>Apellido</th>
-          <th>Correo</th>
-          <th>Contraseña</th>
-          <th>Rol</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(usuario, index) in usuariosFiltrados" :key="usuario.id">
-          <td>{{ index + 1 }}</td>
-          <td>{{ usuario.nombre }}</td>
-          <td>{{ usuario.apellido }}</td>
-          <td>{{ usuario.correo }}</td>
-          <td>{{ usuario.password }}</td>
-          <td>{{ usuario.rol }}</td>
-          <td>
-            <Button icon="pi pi-pencil" aria-label="Editar" text @click="emitirEdicion(usuario)" />
-            <Button
-              icon="pi pi-trash"
-              aria-label="Eliminar"
-              text
-              @click="mostrarEliminarConfirm(usuario)"
-            />
-          </td>
-        </tr>
-        <tr v-if="usuariosFiltrados.length === 0">
-          <td colspan="6">No se encontraron resultados.</td>
-        </tr>
-      </tbody>
-    </table>
-    <Dialog
-      v-model:visible="mostrarConfirmDialog"
-      header="Confirmar Eliminación"
-      :style="{ width: '25rem' }"
-    >
+    <div class="table-responsive">
+      <table class="table align-middle mb-0">
+        <thead>
+          <tr>
+            <th>Nro.</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Correo</th>
+            <th>Rol</th>
+            <th class="text-end">Acciones</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr v-for="(usuario, index) in usuariosFiltrados" :key="usuario.id">
+            <td>{{ index + 1 }}</td>
+            <td>{{ usuario.nombre }}</td>
+            <td>{{ usuario.apellido }}</td>
+            <td>{{ usuario.correo }}</td>
+            <td>{{ usuario.rol }}</td>
+
+            <td class="text-end">
+              <Button icon="pi pi-pencil" severity="info" text @click="emitirEdicion(usuario)" />
+
+              <Button icon="pi pi-trash" severity="danger" text @click="mostrarEliminarConfirm(usuario)" />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <Dialog v-model:visible="mostrarConfirmDialog" header="Confirmar Eliminación" :style="{ width: '25rem' }">
       <p>¿Estás seguro de que deseas eliminar este registro?</p>
       <div class="flex justify-end gap-2">
-        <Button
-          type="button"
-          label="Cancelar"
-          severity="secondary"
-          @click="mostrarConfirmDialog = false"
-        />
+        <Button type="button" label="Cancelar" severity="secondary" @click="mostrarConfirmDialog = false" />
         <Button type="button" label="Eliminar" @click="eliminar" />
       </div>
     </Dialog>

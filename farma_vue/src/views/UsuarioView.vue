@@ -58,29 +58,13 @@ function handleGuardar() {
           <p class="text-muted mb-0">Busca, revisa y gestiona los usuarios registrados.</p>
         </div>
       </div>
-      
+
       <UsuarioList ref="usuarioListRef" @edit="handleEdit" />
     </section>
 
-    <UsuarioSave
-      :mostrar="mostrarDialog"
-      :usuario="usuarioEdit"
-      :modoEdicion="!!usuarioEdit"
-      @guardar="handleGuardar"
-      @close="handleCloseDialog"
-    />
+    <UsuarioSave :mostrar="mostrarDialog" :usuario="usuarioEdit" :modoEdicion="!!usuarioEdit" @guardar="handleGuardar"
+      @close="handleCloseDialog" />
   </AdminLayout>
 </template>
 
-<style scoped>
-.eyebrow {
-  color: var(--admin-primary);
-  font-size: 0.78rem;
-  font-weight: 800;
-  text-transform: uppercase;
-}
-
-.mt-3 {
-  margin-top: 1rem;
-}
-</style>
+<style scoped></style>

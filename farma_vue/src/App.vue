@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router'
 import { ref, watch } from 'vue'
+import '@/assets/js/bootstrap.bundle.min.js'
+import '@/assets/js/main.js'
+
 
 const route = useRoute()
 const router = useRouter()
@@ -31,13 +34,18 @@ const logout = () => {
 </template>
 
 <style>
+@import '@/assets/css/bootstrap.min.css';
+@import '@/assets/vendors/bootstrap-icons/bootstrap-icons.css';
+@import '@/assets/css/style.css';
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   width: 100%;
 }
