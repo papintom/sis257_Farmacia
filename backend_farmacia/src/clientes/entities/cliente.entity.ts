@@ -3,7 +3,6 @@ import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 @Entity('cliente')
 export class Cliente {
-
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -21,6 +20,6 @@ export class Cliente {
 
   @Column({ type: 'text', nullable: true })
   direccion: string;
-  @OneToMany(() => Venta, venta => venta.cliente)
+  @OneToMany(() => Venta, (venta) => venta.cliente)
   ventas: Venta[];
 }

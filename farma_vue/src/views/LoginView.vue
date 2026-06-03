@@ -22,25 +22,18 @@ async function handleLogin() {
   error.value = ''
 
   try {
-    const response = await http.get('usuarios')
-    const usuarios = response.data
+    const response = await http.post('auth/login', {
+      correo: correo.value,
+      password: password.value,
+    })
 
-    const usuario = usuarios.find((u: any) => u.correo === correo.value)
+    const data = response.data
 
-    if (!usuario) {
-      error.value = 'Usuario no encontrado'
-      return
-    }
-
-    if (usuario.password !== password.value) {
-      error.value = 'Contraseña incorrecta'
-      return
-    }
-
-    localStorage.setItem('usuarioActual', JSON.stringify(usuario))
+    localStorage.setItem('usuarioActual', JSON.stringify(data))
     router.push('/medicamentos')
+
   } catch (err: any) {
-    error.value = 'Error al conectar con el servidor'
+    error.value = err?.response?.data?.message || 'Credenciales incorrectas'
   } finally {
     loading.value = false
   }
@@ -97,11 +90,14 @@ function toggleTheme() {
   <main class="pharma-bg" :class="{ 'dark-mode': isDarkMode }" role="main" aria-label="Portal de Farmacia">
 
     <!-- Botón de Tema (Modo Claro / Oscuro) -->
-    <button @click="toggleTheme" class="theme-toggle" :aria-label="isDarkMode ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'">
-      <svg v-if="!isDarkMode" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <button @click="toggleTheme" class="theme-toggle"
+      :aria-label="isDarkMode ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'">
+      <svg v-if="!isDarkMode" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2"
+        fill="none" stroke-linecap="round" stroke-linejoin="round">
         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
       </svg>
-      <svg v-else viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <svg v-else viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"
+        stroke-linecap="round" stroke-linejoin="round">
         <circle cx="12" cy="12" r="5"></circle>
         <line x1="12" y1="1" x2="12" y2="3"></line>
         <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -155,31 +151,16 @@ function toggleTheme() {
 
           <div class="form-group">
             <label>Correo Electrónico</label>
-            <InputText
-              v-model="correo"
-              type="email"
-              :disabled="loading"
-              placeholder="usuario@farmacia.com"
-            />
+            <InputText v-model="correo" type="email" :disabled="loading" placeholder="usuario@farmacia.com" />
           </div>
 
           <div class="form-group">
             <label>Contraseña</label>
-            <InputText
-              v-model="password"
-              type="password"
-              :disabled="loading"
-              placeholder="••••••••"
-            />
+            <InputText v-model="password" type="password" :disabled="loading" placeholder="••••••••" />
           </div>
 
-          <Button
-            type="submit"
-            :disabled="loading"
-            :loading="loading"
-            class="auth-btn w-full"
-            :class="{ 'btn-secondary': esRegistro }"
-          >
+          <Button type="submit" :disabled="loading" :loading="loading" class="auth-btn w-full"
+            :class="{ 'btn-secondary': esRegistro }">
             {{ esRegistro ? 'Registrarse' : 'Ingresar' }}
           </Button>
         </form>
@@ -277,6 +258,7 @@ function toggleTheme() {
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
 }
+
 .theme-toggle:hover {
   transform: scale(1.05);
   box-shadow: 0 6px 12px -2px rgba(0, 0, 0, 0.15);
@@ -300,6 +282,7 @@ function toggleTheme() {
   z-index: 0;
   transition: background 0.4s ease;
 }
+
 .shape-1 {
   width: 400px;
   height: 400px;
@@ -308,6 +291,7 @@ function toggleTheme() {
   left: -100px;
   animation: float-slow 8s ease-in-out infinite alternate;
 }
+
 .shape-2 {
   width: 500px;
   height: 500px;
@@ -317,12 +301,22 @@ function toggleTheme() {
   animation: float-slow 10s ease-in-out infinite alternate-reverse;
 }
 
-.dark-mode .shape-1 { background: rgba(46, 196, 182, 0.08); }
-.dark-mode .shape-2 { background: rgba(33, 150, 243, 0.05); }
+.dark-mode .shape-1 {
+  background: rgba(46, 196, 182, 0.08);
+}
+
+.dark-mode .shape-2 {
+  background: rgba(33, 150, 243, 0.05);
+}
 
 @keyframes float-slow {
-  0% { transform: translate(0, 0); }
-  100% { transform: translate(30px, 40px); }
+  0% {
+    transform: translate(0, 0);
+  }
+
+  100% {
+    transform: translate(30px, 40px);
+  }
 }
 
 /* ─── Cruz Médica ──────────────────────────────────────────── */
@@ -332,6 +326,7 @@ function toggleTheme() {
   justify-content: center;
   margin-bottom: 1rem;
 }
+
 .pharma-cross {
   position: relative;
   width: 54px;
@@ -344,13 +339,23 @@ function toggleTheme() {
   box-shadow: 0 4px 15px rgba(46, 196, 182, 0.2);
   transition: background 0.4s ease;
 }
-.cross-h, .cross-v {
+
+.cross-h,
+.cross-v {
   position: absolute;
   background: #2ec4b6;
   border-radius: 4px;
 }
-.cross-h { width: 32px; height: 10px; }
-.cross-v { width: 10px; height: 32px; }
+
+.cross-h {
+  width: 32px;
+  height: 10px;
+}
+
+.cross-v {
+  width: 10px;
+  height: 32px;
+}
 
 /* ─── Títulos ──────────────────────────────────────────────── */
 .pharma-title {
@@ -362,6 +367,7 @@ function toggleTheme() {
   margin-bottom: 4px;
   transition: color 0.4s ease;
 }
+
 .pharma-sub {
   font-size: 13px;
   font-weight: 500;
@@ -400,6 +406,7 @@ function toggleTheme() {
   display: flex;
   flex-direction: column;
 }
+
 .form-group label {
   display: block;
   font-size: 13px;
@@ -423,16 +430,19 @@ function toggleTheme() {
   outline: none;
   transition: all 0.3s ease !important;
 }
+
 .form-group :deep(input::placeholder),
 .form-group :deep(.p-inputtext::placeholder) {
   color: #94a3b8;
 }
+
 .form-group :deep(input:focus),
 .form-group :deep(.p-inputtext:focus) {
   border-color: #2ec4b6 !important;
   box-shadow: 0 0 0 3px rgba(46, 196, 182, 0.15) !important;
   background: var(--input-focus) !important;
 }
+
 .form-group :deep(input:disabled),
 .form-group :deep(.p-inputtext:disabled) {
   opacity: 0.7;
@@ -443,7 +453,7 @@ function toggleTheme() {
 .auth-btn :deep(.p-button),
 :deep(.auth-btn.p-button) {
   width: 100%;
-  background: #2ec4b6 !important; 
+  background: #2ec4b6 !important;
   color: #fff !important;
   border: none !important;
   padding: 14px !important;
@@ -456,19 +466,23 @@ function toggleTheme() {
   justify-content: center;
   box-shadow: 0 4px 6px -1px rgba(46, 196, 182, 0.2);
 }
+
 :deep(.auth-btn.p-button:hover:not(:disabled)) {
   background: #25a195 !important;
   transform: translateY(-1px);
   box-shadow: 0 6px 8px -1px rgba(46, 196, 182, 0.3);
 }
+
 :deep(.auth-btn.btn-secondary.p-button) {
   background: #3b82f6 !important;
   box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.2);
 }
+
 :deep(.auth-btn.btn-secondary.p-button:hover:not(:disabled)) {
   background: #2563eb !important;
   box-shadow: 0 6px 8px -1px rgba(59, 130, 246, 0.3);
 }
+
 :deep(.auth-btn.p-button:disabled) {
   opacity: 0.6 !important;
   cursor: not-allowed;
@@ -491,6 +505,7 @@ function toggleTheme() {
   font-size: 0.85rem;
   font-weight: 500;
 }
+
 .dark-mode .error-message {
   background-color: rgba(239, 68, 68, 0.1);
   border-color: rgba(239, 68, 68, 0.2);
@@ -502,6 +517,7 @@ function toggleTheme() {
   text-align: center;
   margin-top: 1.25rem;
 }
+
 .link-button {
   background: none;
   border: none;
@@ -513,6 +529,7 @@ function toggleTheme() {
   padding: 0;
   transition: color 0.2s ease;
 }
+
 .link-button:hover {
   color: #2ec4b6;
   text-decoration: underline;
@@ -527,6 +544,7 @@ function toggleTheme() {
   margin-top: 2.5rem;
   margin-bottom: 1rem;
 }
+
 .pill {
   padding: 6px 14px;
   border-radius: 20px;
@@ -535,9 +553,10 @@ function toggleTheme() {
   background: var(--pill-bg);
   border: 1px solid var(--pill-border);
   color: var(--text-muted);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
   transition: all 0.4s ease;
 }
+
 .pill-blue {
   color: var(--pill-blue-text);
   background: var(--pill-blue-bg);
@@ -558,12 +577,14 @@ function toggleTheme() {
   transition: all 0.3s ease-out;
   overflow: hidden;
 }
+
 .slide-down-enter-from,
 .slide-down-leave-to {
   opacity: 0;
   max-height: 0;
   margin-bottom: 0;
 }
+
 .slide-down-enter-to,
 .slide-down-leave-from {
   opacity: 1;
@@ -577,9 +598,11 @@ function toggleTheme() {
     padding: 1.5rem;
     border-radius: 12px;
   }
+
   .pharma-title {
     font-size: 22px;
   }
+
   .theme-toggle {
     top: 1rem;
     right: 1rem;

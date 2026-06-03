@@ -1,4 +1,8 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateCategoriaDto } from './dto/create-categoria.dto';
 import { UpdateCategoriaDto } from './dto/update-categoria.dto';
 import { Categoria } from './entities/categoria.entity';
@@ -13,7 +17,6 @@ export class CategoriaService {
   ) {}
 
   async create(createCategoriaDto: CreateCategoriaDto): Promise<Categoria> {
-
     let categoria = await this.categoriaRepository.findOneBy({
       nombre: createCategoriaDto.nombre.trim(),
     });
@@ -29,26 +32,29 @@ export class CategoriaService {
   }
 
   async findAll(): Promise<Categoria[]> {
-  return this.categoriaRepository.find({
-    order: { id: 'ASC' }, 
-    relations: ['medicamentos'], 
-  });
-}
-
-async findOne(id: number): Promise<Categoria> {
-  const categoria = await this.categoriaRepository.findOne({
-    where: { id: id }, 
-    //relations: ['medicamentos'],
-  });
-
-  if (!categoria) {
-    throw new NotFoundException(`Categoría con id ${id} no encontrada`);
+    return this.categoriaRepository.find({
+      order: { id: 'ASC' },
+      relations: ['medicamentos'],
+    });
   }
 
-  return categoria;
-}
+  async findOne(id: number): Promise<Categoria> {
+    const categoria = await this.categoriaRepository.findOne({
+      where: { id: id },
+      //relations: ['medicamentos'],
+    });
 
-  async update(id: number, updateCategoriaDto: UpdateCategoriaDto): Promise<Categoria> {
+    if (!categoria) {
+      throw new NotFoundException(`Categoría con id ${id} no encontrada`);
+    }
+
+    return categoria;
+  }
+
+  async update(
+    id: number,
+    updateCategoriaDto: UpdateCategoriaDto,
+  ): Promise<Categoria> {
     const categoria = await this.findOne(id);
     Object.assign(categoria, updateCategoriaDto);
     return this.categoriaRepository.save(categoria);

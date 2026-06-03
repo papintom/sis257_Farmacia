@@ -5,25 +5,22 @@ import { Venta } from './entities/venta.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-
 @Injectable()
 export class VentaService {
- constructor(
+  constructor(
     @InjectRepository(Venta)
     private ventaRepository: Repository<Venta>,
   ) {}
 
   async create(createVentaDto: CreateVentaDto): Promise<Venta> {
+    const venta = new Venta();
+    Object.assign(venta, createVentaDto);
 
-  const venta = new Venta();
-  Object.assign(venta, createVentaDto);
+    venta.usuario = { id: createVentaDto.idUsuario } as any;
+    venta.cliente = { id: createVentaDto.idCliente } as any;
 
- 
-  venta.usuario = { id: createVentaDto.idUsuario } as any;
-  venta.cliente = { id: createVentaDto.idCliente } as any;
-
-  return this.ventaRepository.save(venta);
-}
+    return this.ventaRepository.save(venta);
+  }
 
   async findAll(): Promise<Venta[]> {
     return this.ventaRepository.find({

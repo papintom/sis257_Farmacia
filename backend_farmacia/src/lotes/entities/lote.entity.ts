@@ -34,12 +34,11 @@ export class Lote {
   @ManyToOne(() => Medicamento, (medicamento) => medicamento.lotes)
   @JoinColumn({ name: 'id_medicamento', referencedColumnName: 'id' })
   medicamento: Medicamento;
-  
+
   @ManyToOne(() => Proveedor, (proveedor) => proveedor.lotes)
   @JoinColumn({ name: 'id_proveedor', referencedColumnName: 'id' })
   proveedor: Proveedor;
 
   @OneToMany(() => DetalleVenta, (detalleVenta) => detalleVenta.lote)
   detallesVenta: DetalleVenta[];
-
 }

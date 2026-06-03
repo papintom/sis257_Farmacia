@@ -86,19 +86,32 @@ router.beforeEach((to, from, next) => {
   const isLogged = isAuthenticated()
   const isLoginRoute = to.name === 'login'
 
-  // Si intenta ir a login y ya está logueado, redirige al home
+  let usuario = {}
+
+  try {
+    usuario = JSON.parse(localStorage.getItem('usuarioActual') || '{}')
+  } catch (e) {
+    usuario = {}
+  }
+
+  // login redirect
   if (isLoginRoute && isLogged) {
     next({ name: 'home' })
     return
   }
 
-  // Si la ruta requiere autenticación y no está logueado, redirige al login
+  // auth check
   if (requiresAuth && !isLogged) {
     next({ name: 'login' })
     return
   }
 
-  // Si todo está bien, continúa
+  // role check (SAFE)
+  if (to.path === '/usuarios' && usuario?.rol !== 'admin') {
+    next({ name: 'home' })
+    return
+  }
+
   next()
 })
 

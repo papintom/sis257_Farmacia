@@ -1,4 +1,8 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateProveedorDto } from './dto/create-proveedor.dto';
 import { UpdateProveedorDto } from './dto/update-proveedor.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -7,7 +11,10 @@ import { Proveedor } from './entities/proveedor.entity';
 
 @Injectable()
 export class ProveedoresService {
-  constructor(@InjectRepository(Proveedor) private proveedorRepository: Repository<Proveedor>) {}
+  constructor(
+    @InjectRepository(Proveedor)
+    private proveedorRepository: Repository<Proveedor>,
+  ) {}
   async create(createProveedorDto: CreateProveedorDto): Promise<Proveedor> {
     let proveedor = await this.proveedorRepository.findOneBy({
       nombre: createProveedorDto.nombre.trim(),
@@ -26,7 +33,7 @@ export class ProveedoresService {
   async findAll(): Promise<Proveedor[]> {
     return this.proveedorRepository.find({
       order: { id: 'ASC' },
-      relations: ['lotes'], 
+      relations: ['lotes'],
     });
   }
 
@@ -42,9 +49,11 @@ export class ProveedoresService {
 
     return proveedor;
   }
-  
 
-  async update(id: number, updateProveedorDto: UpdateProveedorDto): Promise<Proveedor> {
+  async update(
+    id: number,
+    updateProveedorDto: UpdateProveedorDto,
+  ): Promise<Proveedor> {
     const proveedor = await this.findOne(id);
     Object.assign(proveedor, updateProveedorDto);
     return this.proveedorRepository.save(proveedor);

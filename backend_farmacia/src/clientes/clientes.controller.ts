@@ -24,7 +24,7 @@ export class ClienteController {
   findAll() {
     return this.clienteService.findAll();
   }
-  
+
   @Get('ci/:ci')
   buscarPorCi(@Param('ci') ci: string) {
     return this.clienteService.buscarPorCi(ci);

@@ -11,6 +11,7 @@ import { CategoriaModule } from './categorias/categorias.module';
 import { ConfigModule } from '@nestjs/config';
 import { LotesModule } from './lotes/lotes.module';
 import { ProveedoresModule } from './proveedores/proveedores.module';
+import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -33,6 +34,7 @@ import { ProveedoresModule } from './proveedores/proveedores.module';
     CategoriaModule,
     LotesModule,
     ProveedoresModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

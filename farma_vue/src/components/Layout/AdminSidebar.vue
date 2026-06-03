@@ -18,9 +18,14 @@ const emit = defineEmits<{
 
 const router = useRouter()
 
+const usuarioActual = JSON.parse(localStorage.getItem('usuarioActual') || '{}')
 const navigationItems: NavItem[] = [
   { name: 'Dashboard', icon: 'bi-speedometer2', path: '/' },
-  { name: 'Usuarios', icon: 'bi-people', path: '/usuarios' },
+
+  ...(usuarioActual.rol === 'admin'
+    ? [{ name: 'Usuarios', icon: 'bi-people', path: '/usuarios' }]
+    : []),
+
   { name: 'Medicamentos', icon: 'bi-capsule', path: '/medicamentos' },
   { name: 'Ventas', icon: 'bi-cart-check', path: '/ventas' },
   { name: 'Clientes', icon: 'bi-person-check', path: '/clientes' },
@@ -29,12 +34,11 @@ const navigationItems: NavItem[] = [
   { name: 'Lotes', icon: 'bi-boxes', path: '/lotes' },
   { name: 'Historial de Ventas', icon: 'bi-clock-history', path: '/historial-ventas' },
 ]
-
 const currentRoute = computed(() => router.currentRoute.value.path)
 
 const isActive = (path: string) => currentRoute.value === path
 
-const usuarioActual = JSON.parse(localStorage.getItem('usuarioActual') || '{}')
+
 
 const logout = () => {
   localStorage.removeItem('usuarioActual')

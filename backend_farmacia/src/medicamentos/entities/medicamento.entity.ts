@@ -1,11 +1,19 @@
 import { Categoria } from 'src/categorias/entities/categoria.entity';
 import { Lote } from 'src/lotes/entities/lote.entity';
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToOne, JoinColumn } from 'typeorm';
-
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 
 @Entity('medicamento')
 export class Medicamento {
-
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -23,8 +31,8 @@ export class Medicamento {
 
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   precio: number;
-  
-  @Column('varchar', { length: 2000 , nullable: true})
+
+  @Column('varchar', { length: 2000, nullable: true })
   fotografia: string;
 
   @CreateDateColumn({ name: 'fecha_creacion' })
@@ -40,6 +48,4 @@ export class Medicamento {
   @ManyToOne(() => Categoria, (categoria) => categoria.id)
   @JoinColumn({ name: 'id_categoria', referencedColumnName: 'id' })
   categoria: Categoria;
-  
-
 }

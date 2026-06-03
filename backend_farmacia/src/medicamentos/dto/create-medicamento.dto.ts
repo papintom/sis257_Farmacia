@@ -24,29 +24,38 @@ export class CreateMedicamentoDto {
 
   @ApiProperty()
   @IsString({ message: 'El campo "descripcion" debe ser una cadena de texto.' })
-  @MaxLength(200, {message: 'El campo "descripcion" no puede exceder los 200 caracteres.'})
+  @MaxLength(200, {
+    message: 'El campo "descripcion" no puede exceder los 200 caracteres.',
+  })
   readonly descripcion: string;
 
   @ApiProperty()
   @IsNotEmpty({ message: 'El campo "concentracion" es obligatorio.' })
-  @IsString({ message: 'El campo "concentracion" debe ser una cadena de texto.'})
-  @MaxLength(50, { message: 'El campo "concentracion" no puede exceder los 50 caracteres.'})
+  @IsString({
+    message: 'El campo "concentracion" debe ser una cadena de texto.',
+  })
+  @MaxLength(50, {
+    message: 'El campo "concentracion" no puede exceder los 50 caracteres.',
+  })
   readonly concentracion: string;
 
   @ApiProperty()
   @IsNotEmpty({ message: 'El campo "forma" es obligatorio.' })
-  @IsString({ message: 'El campo "forma" debe ser una cadena de texto.'})
-  @MaxLength(20, { message: 'El campo "forma" no puede exceder los 20 caracteres.'})
+  @IsString({ message: 'El campo "forma" debe ser una cadena de texto.' })
+  @MaxLength(20, {
+    message: 'El campo "forma" no puede exceder los 20 caracteres.',
+  })
   readonly forma: string;
 
   @ApiProperty()
   @IsDefined({ message: 'El campo "precio" es obligatorio.' })
   readonly precio: number;
 
-   @ApiProperty()
+  @ApiProperty()
   @IsNotEmpty({ message: 'La fotografia es requerido' })
   @IsString({ message: 'La fotografia debe ser una cadena de texto' })
-  @MaxLength(2000, { message: 'La fotografia no puede tener más de 2000 caracteres' })
+  @MaxLength(2000, {
+    message: 'La fotografia no puede tener más de 2000 caracteres',
+  })
   readonly fotografia: string;
-
 }

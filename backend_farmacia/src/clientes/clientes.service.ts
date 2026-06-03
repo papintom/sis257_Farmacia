@@ -1,4 +1,8 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateClienteDto } from './dto/create-cliente.dto';
 import { UpdateClienteDto } from './dto/update-cliente.dto';
 import { Cliente } from './entities/cliente.entity';
@@ -7,14 +11,12 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class ClienteService {
- constructor(
+  constructor(
     @InjectRepository(Cliente)
     private clienteRepository: Repository<Cliente>,
   ) {}
 
   async create(createClienteDto: CreateClienteDto): Promise<Cliente> {
-
-   
     let cliente = await this.clienteRepository.findOneBy({
       ci: createClienteDto.ci.trim(),
     });
@@ -45,7 +47,10 @@ export class ClienteService {
     return cliente;
   }
 
-  async update(id: number, updateClienteDto: UpdateClienteDto): Promise<Cliente> {
+  async update(
+    id: number,
+    updateClienteDto: UpdateClienteDto,
+  ): Promise<Cliente> {
     const cliente = await this.findOne(id);
     Object.assign(cliente, updateClienteDto);
     return this.clienteRepository.save(cliente);
@@ -57,15 +62,14 @@ export class ClienteService {
   }
 
   async buscarPorCi(ci: string): Promise<Cliente> {
+    const cliente = await this.clienteRepository.findOne({
+      where: { ci },
+    });
 
-  const cliente = await this.clienteRepository.findOne({
-    where: { ci },
-  });
+    if (!cliente) {
+      throw new NotFoundException('Cliente no encontrado');
+    }
 
-  if (!cliente) {
-    throw new NotFoundException('Cliente no encontrado');
+    return cliente;
   }
-
-  return cliente;
-}
 }
