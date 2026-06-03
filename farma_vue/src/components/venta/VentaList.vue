@@ -55,54 +55,45 @@ onMounted(() => {
 </script>
 
 <template>
+    <div class="panel">
+        <div class="panel-header">
 
-    <div class="card">
-
-        <h2 class="mb-4">
-            Historial de Ventas
-        </h2>
-        <div class="mb-4">
-
-            <InputText v-model="busqueda" placeholder="Buscar por nombre, apellido o CI" class="w-full" />
-
+            <div style="width: 600px">
+                <InputText v-model="busqueda" class="w-100" placeholder="Buscar por nombre, apellido o CI" />
+            </div>
         </div>
 
-        <DataTable :value="ventasFiltradas" paginator :rows="10" tableStyle="min-width: 60rem">
+        <div class="table-responsive">
+            <DataTable :value="ventasFiltradas" paginator :rows="10" tableStyle="min-width: 100%">
+                <Column field="id" header="#" />
 
-            <Column field="id" header="#" />
+                <Column field="fecha" header="Fecha" />
 
-            <Column field="fecha" header="Fecha" />
-            <Column field="cliente.ci" header="CI" />
+                <Column field="cliente.ci" header="CI" />
 
-            <Column header="Cliente">
+                <Column header="Cliente">
+                    <template #body="{ data }">
+                        {{ data.cliente.nombre }}
+                        {{ data.cliente.apellido }}
+                    </template>
+                </Column>
 
-                <template #body="{ data }">
+                <Column field="metodoPago" header="Método Pago" />
 
-                    {{ data.cliente.nombre }}
-                    {{ data.cliente.apellido }}
+                <Column header="Total">
+                    <template #body="{ data }">
+                        Bs. {{ data.total }}
+                    </template>
+                </Column>
 
-                </template>
-
-            </Column>
-
-            <Column field="metodoPago" header="Método Pago" />
-
-            <Column field="total" header="Total" />
-
-            <Column header="Acciones">
-
-                <template #body="{ data }">
-
-                    <Button icon="pi pi-eye" label="Ver" @click="verDetalle(data)" />
-
-                </template>
-
-            </Column>
-
-        </DataTable>
-
-
-
+                <Column header="Acciones">
+                    <template #body="{ data }">
+                        <div class="d-flex gap-2">
+                            <Button icon="pi pi-eye" severity="info" outlined rounded @click="verDetalle(data)" />
+                        </div>
+                    </template>
+                </Column>
+            </DataTable>
+        </div>
     </div>
-
 </template>

@@ -38,38 +38,48 @@ const emit = defineEmits(['agregar'])
 </script>
 
 <template>
+    <div class="panel">
+        <div class="panel-header">
+            <div>
+                <h2 class="h5 mb-1 section-title">
+                    <i class="bi bi-capsule"></i>
+                    <span>Medicamentos</span>
+                </h2>
+                <p class="text-muted mb-0">
+                    Selecciona medicamentos para agregar a la venta.
+                </p>
+            </div>
 
-    <div class="card p-4">
-
-        <h2 class="text-2xl font-bold mb-4">
-            Medicamentos
-        </h2>
-        <div class="mb-4">
-            <InputText v-model="busquedaMedicamento" placeholder="Buscar medicamento..." class="w-full" />
+            <div style="width: 350px">
+                <InputText v-model="busquedaMedicamento" placeholder="Buscar medicamento..." />
+            </div>
         </div>
 
-        <DataTable :value="lotesFiltrados" paginator :rows="5">
+        <div class="table-responsive">
+            <DataTable :value="lotesFiltrados" paginator :rows="5" tableStyle="min-width: 100%">
+                <Column field="medicamento.nombre" header="Medicamento" />
 
-            <Column field="medicamento.nombre" header="Medicamento" />
-            <Column field="id" header="N° Lote" />
-            <Column field="fechaVencimiento" header="Fecha Vencimiento" />
+                <Column field="id" header="N° Lote" />
 
-            <Column field="stock" header="Stock" />
+                <Column field="fechaVencimiento" header="Fecha Vencimiento" />
 
-            <Column field="medicamento.precio" header="Precio" />
+                <Column field="stock" header="Stock" />
 
-            <Column header="Acción">
+                <Column field="medicamento.precio" header="Precio">
+                    <template #body="{ data }">
+                        Bs. {{ data.medicamento.precio }}
+                    </template>
+                </Column>
 
-                <template #body="{ data }">
-
-                    <Button label="Agregar" icon="pi pi-plus" @click="emit('agregar', data)" />
-
-                </template>
-
-            </Column>
-
-        </DataTable>
-
+                <Column header="Acciones">
+                    <template #body="{ data }">
+                        <div class="d-flex gap-2">
+                            <Button icon="pi pi-plus" severity="success" outlined rounded
+                                @click="emit('agregar', data)" />
+                        </div>
+                    </template>
+                </Column>
+            </DataTable>
+        </div>
     </div>
-
 </template>

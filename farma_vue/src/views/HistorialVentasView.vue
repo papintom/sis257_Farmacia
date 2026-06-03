@@ -28,21 +28,10 @@ import VentaList from '@/components/venta/VentaList.vue'
                     <p class="text-muted mb-0">Detalle de todas las ventas registradas en el sistema.</p>
                 </div>
             </div>
-            
+
             <VentaList />
         </section>
     </AdminLayout>
 </template>
 
-<style scoped>
-.eyebrow {
-  color: var(--admin-primary);
-  font-size: 0.78rem;
-  font-weight: 800;
-  text-transform: uppercase;
-}
-
-.mt-3 {
-  margin-top: 1rem;
-}
-</style>
+<style scoped></style>

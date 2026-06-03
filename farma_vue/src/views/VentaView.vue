@@ -195,63 +195,86 @@ onMounted(() => {
 
 <template>
     <AdminLayout>
+        <!-- TÍTULO -->
         <div class="page-heading">
             <div class="page-heading-copy">
                 <span class="page-icon">
                     <i class="bi bi-cart-check" aria-hidden="true"></i>
                 </span>
                 <div>
-                    <p class="eyebrow mb-1">Operaciones</p>
+                    <p class="eyebrow mb-1">Ventas</p>
                     <h1 class="h3 mb-1">Nueva Venta</h1>
-                    <p class="text-muted mb-0">Registra nuevas ventas y detalles de compra.</p>
+                    <p class="text-muted mb-0">
+                        Registra nuevas ventas y administra los detalles de compra.
+                    </p>
                 </div>
             </div>
         </div>
 
-        <!-- CABECERA -->
-        <section class="panel mt-3">
+        <!-- DATOS DEL CLIENTE -->
+        <section class="panel mt-4">
             <div class="panel-header">
-                <h2 class="h5 mb-0 section-title">
-                    <i class="bi bi-info-circle" aria-hidden="true"></i>
-                    <span>Información del Cliente</span>
-                </h2>
+                <div>
+                    <h2 class="h5 mb-1 section-title">
+                        <i class="bi bi-person-vcard"></i>
+                        <span>Información del Cliente</span>
+                    </h2>
+                    <p class="text-muted mb-0">
+                        Selecciona el cliente y método de pago.
+                    </p>
+                </div>
             </div>
 
-            <div style="padding: 1.5rem;">
-                <div class="grid">
-                    <!-- CLIENTE -->
-                    <div class="col-12 col-md-6">
-                        <label class="form-label">CI Cliente</label>
-                        <div style="display: flex; gap: 0.5rem;">
-                            <InputText v-model="ciCliente" placeholder="Ingrese CI" style="flex: 1;" />
-                            <Button icon="pi pi-search" @click="buscarCliente" />
-                            <Button icon="pi pi-plus" @click="agregarCliente" />
+            <div class="p-4">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">
+                            CI Cliente
+                        </label>
+
+                        <div class="d-flex gap-2">
+                            <InputText v-model="ciCliente" placeholder="Ingrese CI" style="flex: 1" />
+
+                            <Button icon="pi pi-search" severity="secondary" outlined @click="buscarCliente" />
+
+                            <Button icon="pi pi-plus" severity="secondary" outlined @click="agregarCliente" />
                         </div>
                     </div>
 
-                    <div class="col-12 col-md-6">
-                        <label class="form-label">Cliente</label>
-                        <InputText :value="cliente ? cliente.nombre + ' ' + cliente.apellido : ''" disabled />
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">
+                            Cliente
+                        </label>
+
+                        <InputText :value="cliente ? cliente.nombre + ' ' + cliente.apellido : ''" disabled
+                            style="width: 100%" />
                     </div>
 
-                    <!-- METODO -->
-                    <div class="col-12 col-md-6">
-                        <label class="form-label">Método de Pago</label>
-                        <Select v-model="metodoPago" :options="metodosPago" placeholder="Seleccione método" />
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">
+                            Método de Pago
+                        </label>
+
+                        <Select v-model="metodoPago" :options="metodosPago" placeholder="Seleccione método"
+                            style="width: 100%" />
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- CONTENIDO -->
-        <div class="row g-3 mt-1">
-            <div class="col-12 col-xl-8">
+        <!-- PRODUCTOS + DETALLE -->
+        <div class="row g-4 mt-2">
+            <div class="col-xl-8">
                 <VentaProductos @agregar="agregarProducto" />
             </div>
 
-            <div class="col-12 col-xl-4">
+            <div class="col-xl-4">
                 <VentaDetalle :detalleVenta="detalleVenta" :total="total" @eliminar="eliminarProducto" />
-                <Button label="Guardar Venta" icon="pi pi-save" class="btn btn-primary" style="width: 100%; margin-top: 1rem;" @click="guardarVenta" />
+
+                <button class="btn btn-primary w-100 mt-3" @click="guardarVenta">
+                    <i class="bi bi-save me-2"></i>
+                    Guardar Venta
+                </button>
             </div>
         </div>
 
@@ -260,43 +283,4 @@ onMounted(() => {
     </AdminLayout>
 </template>
 
-<style scoped>
-.eyebrow {
-  color: var(--admin-primary);
-  font-size: 0.78rem;
-  font-weight: 800;
-  text-transform: uppercase;
-}
-
-.mt-1 {
-  margin-top: 0.25rem;
-}
-
-.mt-3 {
-  margin-top: 1rem;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
-  gap: 1rem;
-}
-
-.col-12 {
-  grid-column: 1 / -1;
-}
-
-.col-md-6 {
-  @media (min-width: 768px) {
-    grid-column: span 6;
-  }
-}
-
-.form-label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 600;
-  font-size: 0.875rem;
-  color: var(--admin-text);
-}
-</style>
+<style scoped></style>

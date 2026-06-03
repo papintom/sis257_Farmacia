@@ -47,63 +47,65 @@ defineExpose({ obtenerLista })
 </script>
 
 <template>
-  <div>
-    <div class="col-7 pl-0 mt-3">
-      <InputGroup>
-        <InputGroupAddon><i class="pi pi-search"></i></InputGroupAddon>
-        <InputText v-model="busqueda" type="text" placeholder="Buscar por nombre o nacionalidad" />
-      </InputGroup>
+  <div class="panel">
+    <div class="panel-header">
+
+
+      <div style="width: 320px">
+        <InputGroup>
+          <InputGroupAddon>
+            <i class="pi pi-search"></i>
+          </InputGroupAddon>
+          <InputText v-model="busqueda" placeholder="Buscar proveedor" />
+        </InputGroup>
+      </div>
     </div>
-    <table>
-      <thead>
-        <tr>
-          <th>Nro.</th>
-          <th>Nombre</th>
-          <th>Telefono</th>
-          <th>Direccion</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(proveedor, index) in proveedorsFiltrados" :key="proveedor.id">
-          <td>{{ index + 1 }}</td>
-          <td>{{ proveedor.nombre }}</td>
-          <td>{{ proveedor.telefono }}</td>
-          <td>{{ proveedor.direccion }}</td>
-          <td>
-            <Button
-              icon="pi pi-pencil"
-              aria-label="Editar"
-              text
-              @click="emitirEdicion(proveedor)"
-            />
-            <Button
-              icon="pi pi-trash"
-              aria-label="Eliminar"
-              text
-              @click="mostrarEliminarConfirm(proveedor)"
-            />
-          </td>
-        </tr>
-        <tr v-if="proveedorsFiltrados.length === 0">
-          <td colspan="4">No se encontraron resultados.</td>
-        </tr>
-      </tbody>
-    </table>
-    <Dialog
-      v-model:visible="mostrarConfirmDialog"
-      header="Confirmar Eliminación"
-      :style="{ width: '25rem' }"
-    >
+
+    <div class="table-responsive">
+      <table class="table align-middle mb-0">
+        <thead>
+          <tr>
+            <th>Nro.</th>
+            <th>Nombre</th>
+            <th>Teléfono</th>
+            <th>Dirección</th>
+            <th class="text-end">Acciones</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr v-for="(proveedor, index) in proveedorsFiltrados" :key="proveedor.id">
+            <td>{{ index + 1 }}</td>
+            <td>{{ proveedor.nombre }}</td>
+            <td>{{ proveedor.telefono }}</td>
+            <td>{{ proveedor.direccion }}</td>
+
+            <td class="text-end">
+              <div class="d-flex justify-content-end gap-2">
+                <Button icon="pi pi-pencil" severity="info" outlined rounded @click="emitirEdicion(proveedor)" />
+
+                <Button icon="pi pi-trash" severity="danger" outlined rounded
+                  @click="mostrarEliminarConfirm(proveedor)" />
+              </div>
+            </td>
+          </tr>
+
+          <tr v-if="proveedorsFiltrados.length === 0">
+            <td colspan="5" class="text-center">
+              No se encontraron resultados.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <Dialog v-model:visible="mostrarConfirmDialog" header="Confirmar Eliminación" :style="{ width: '25rem' }">
       <p>¿Estás seguro de que deseas eliminar este registro?</p>
-      <div class="flex justify-end gap-2">
-        <Button
-          type="button"
-          label="Cancelar"
-          severity="secondary"
-          @click="mostrarConfirmDialog = false"
-        />
-        <Button type="button" label="Eliminar" @click="eliminar" />
+
+      <div class="d-flex justify-content-end gap-2 mt-3">
+        <Button label="Cancelar" severity="secondary" @click="mostrarConfirmDialog = false" />
+
+        <Button label="Eliminar" severity="danger" @click="eliminar" />
       </div>
     </Dialog>
   </div>
