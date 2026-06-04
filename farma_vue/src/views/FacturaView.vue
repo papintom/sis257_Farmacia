@@ -15,11 +15,12 @@ const detalles = ref<any[]>([])
 async function cargarFactura() {
 
     const idVenta = route.params.id
+    console.log('ID VENTA:', idVenta)
 
     venta.value = await http
         .get(`ventas/${idVenta}`)
         .then(res => res.data)
-
+    console.log('VENTA:', venta.value)
     detalles.value = await http
         .get(`detalle-ventas/venta/${idVenta}`)
         .then(res => res.data)

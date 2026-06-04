@@ -28,6 +28,7 @@ async function handleLogin() {
     })
 
     const data = response.data
+    console.log(response.data)
 
     localStorage.setItem('usuarioActual', JSON.stringify(data))
     router.push('/medicamentos')

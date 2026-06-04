@@ -89,8 +89,6 @@ defineExpose({ obtenerLista })
               <div class="d-flex justify-content-end gap-2">
                 <Button icon="pi pi-pencil" severity="info" outlined rounded @click="emitirEdicion(cliente)" />
 
-                <Button icon="pi pi-trash" severity="danger" outlined rounded
-                  @click="mostrarEliminarConfirm(cliente)" />
               </div>
             </td>
           </tr>
