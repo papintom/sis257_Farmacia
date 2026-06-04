@@ -22,7 +22,7 @@ export class CreateUsuarioDto {
   @IsNotEmpty({ message: 'El campo "correo" es obligatorio.' })
   @IsString({ message: 'El campo "correo" debe ser una cadena de texto.' })
   @MaxLength(50, {
-    message: 'El campo "correo" no puede exceder los 100 caracteres.',
+    message: 'El campo "correo" no puede exceder los 50 caracteres.',
   })
   readonly correo: string;
 
@@ -30,7 +30,7 @@ export class CreateUsuarioDto {
   @IsNotEmpty({ message: 'El campo "password" es obligatorio.' })
   @IsString({ message: 'El campo "password" debe ser una cadena de texto.' })
   @MaxLength(250, {
-    message: 'El campo "password" no puede exceder los 100 caracteres.',
+    message: 'El campo "password" no puede exceder los 250 caracteres.',
   })
   readonly password: string;
 

@@ -69,7 +69,6 @@ export class ClienteService {
     if (!cliente) {
       throw new NotFoundException('Cliente no encontrado');
     }
-
     return cliente;
   }
 }

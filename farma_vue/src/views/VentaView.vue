@@ -262,21 +262,29 @@ onMounted(() => {
             </div>
         </section>
 
-        <!-- PRODUCTOS + DETALLE -->
-        <div class="row g-4 mt-2">
-            <div class="col-xl-8">
-                <VentaProductos @agregar="agregarProducto" />
+        <!-- SECCIÓN DE PRODUCTOS (CÁTALOGO/BUSQUEDA) -->
+        <section class="mt-4">
+            <VentaProductos @agregar="agregarProducto" />
+        </section>
+
+        <!-- SECCIÓN DE DETALLE DE VENTA (LISTADO DE COMPRA) -->
+        <section class="panel mt-4">
+            <div class="panel-header">
+                <h2 class="h5 mb-0 section-title">
+                    <i class="bi bi-cart-check-fill"></i>
+                    <span>Resumen de Venta</span>
+                </h2>
             </div>
+            
+            <VentaDetalle :detalleVenta="detalleVenta" :total="total" @eliminar="eliminarProducto" />
 
-            <div class="col-xl-4">
-                <VentaDetalle :detalleVenta="detalleVenta" :total="total" @eliminar="eliminarProducto" />
-
-                <button class="btn btn-primary w-100 mt-3" @click="guardarVenta">
-                    <i class="bi bi-save me-2"></i>
-                    Guardar Venta
+            <div class="p-4 d-flex justify-content-end">
+                <button class="btn btn-primary btn-lg px-5 shadow-sm" @click="guardarVenta">
+                    <i class="bi bi-check-circle me-2"></i>
+                    Finalizar y Guardar Venta
                 </button>
             </div>
-        </div>
+        </section>
 
         <ClienteSave :mostrar="mostrarClienteDialog" :clientes="{}" :modoEdicion="false"
             @close="mostrarClienteDialog = false" @guardar="mostrarClienteDialog = false" />

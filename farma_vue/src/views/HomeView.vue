@@ -1,6 +1,27 @@
 <script setup lang="ts">
 import AdminLayout from '@/components/Layout/AdminLayout.vue'
+import { onMounted, ref } from 'vue'
+import http from '@/plugins/axios'
 
+const totales = ref({
+  totalMedicamentos: 0,
+  totalVentas: 0,
+  totalClientes: 0,
+  totalProveedores: 0
+})
+
+async function obtenerTotales() {
+  try {
+    const response = await http.get('dashboard/totals')
+    totales.value = response.data
+  } catch (error) {
+    console.error('Error al obtener los totales del dashboard:', error)
+  }
+}
+
+onMounted(() => {
+  obtenerTotales()
+})
 </script>
 
 <template>
@@ -25,11 +46,7 @@ import AdminLayout from '@/components/Layout/AdminLayout.vue'
             <span class="metric-label">Total Medicamentos</span>
             <span class="metric-icon"><i class="bi bi-capsule" aria-hidden="true"></i></span>
           </div>
-          <div class="metric-value">1,284</div>
-          <div class="metric-meta">
-            <span class="text-success">+5.2%</span>
-            <span>este mes</span>
-          </div>
+          <div class="metric-value">{{ totales.totalMedicamentos }}</div>
         </article>
       </div>
 
@@ -39,11 +56,7 @@ import AdminLayout from '@/components/Layout/AdminLayout.vue'
             <span class="metric-label">Ventas</span>
             <span class="metric-icon"><i class="bi bi-cart-check" aria-hidden="true"></i></span>
           </div>
-          <div class="metric-value">324</div>
-          <div class="metric-meta">
-            <span class="text-success">+12.8%</span>
-            <span>desde ayer</span>
-          </div>
+          <div class="metric-value">{{ totales.totalVentas }}</div>
         </article>
       </div>
 
@@ -53,11 +66,8 @@ import AdminLayout from '@/components/Layout/AdminLayout.vue'
             <span class="metric-label">Clientes</span>
             <span class="metric-icon"><i class="bi bi-people" aria-hidden="true"></i></span>
           </div>
-          <div class="metric-value">8,742</div>
-          <div class="metric-meta">
-            <span class="text-success">+3.1%</span>
-            <span>activos</span>
-          </div>
+          <div class="metric-value">{{ totales.totalClientes }}</div>
+
         </article>
       </div>
 
@@ -67,11 +77,8 @@ import AdminLayout from '@/components/Layout/AdminLayout.vue'
             <span class="metric-label">Proveedores</span>
             <span class="metric-icon"><i class="bi bi-building" aria-hidden="true"></i></span>
           </div>
-          <div class="metric-value">42</div>
-          <div class="metric-meta">
-            <span class="text-success">Activos</span>
-            <span>conectados</span>
-          </div>
+          <div class="metric-value">{{ totales.totalProveedores }}</div>
+
         </article>
       </div>
     </section>

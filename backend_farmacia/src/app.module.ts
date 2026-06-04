@@ -12,6 +12,7 @@ import { ConfigModule } from '@nestjs/config';
 import { LotesModule } from './lotes/lotes.module';
 import { ProveedoresModule } from './proveedores/proveedores.module';
 import { AuthModule } from './auth/auth.module';
+import { DashboardModule } from './ventas/dashboard.module';
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -35,6 +36,7 @@ import { AuthModule } from './auth/auth.module';
     LotesModule,
     ProveedoresModule,
     AuthModule,
+    DashboardModule,
   ],
   controllers: [AppController],
   providers: [AppService],
