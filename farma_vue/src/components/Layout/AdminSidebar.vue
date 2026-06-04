@@ -29,7 +29,7 @@ const navigationItems: NavItem[] = [
   { name: 'Medicamentos', icon: 'bi-capsule', path: '/medicamentos' },
   { name: 'Ventas', icon: 'bi-cart-check', path: '/ventas' },
   { name: 'Clientes', icon: 'bi-person-check', path: '/clientes' },
-  { name: 'Categorías', icon: 'bi-tag', path: '/about' },
+  { name: 'Categorías', icon: 'bi-tag', path: '/categorias' },
   { name: 'Proveedores', icon: 'bi-building', path: '/proveedores' },
   { name: 'Lotes', icon: 'bi-boxes', path: '/lotes' },
   { name: 'Historial de Ventas', icon: 'bi-clock-history', path: '/historial-ventas' },

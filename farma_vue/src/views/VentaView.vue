@@ -121,6 +121,11 @@ const total = computed(() => {
         0
     )
 })
+const usuarioActual = JSON.parse(
+    localStorage.getItem('usuarioActual') || '{}'
+)
+
+const idUsuario = ref(usuarioActual.id)
 
 /* =========================
    GUARDAR
@@ -134,7 +139,7 @@ async function guardarVenta() {
 
             idCliente: idCliente.value,
 
-            idUsuario: 2,
+            idUsuario: idUsuario.value,
 
             metodoPago: metodoPago.value,
 
