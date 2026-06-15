@@ -18,6 +18,13 @@ import {
 export class Venta {
   @PrimaryGeneratedColumn()
   id: number;
+  
+  @Column({ name: 'id_usuario', type: 'int' })
+  idUsuario: number;
+
+  @Column({ name: 'id_cliente', type: 'int' })
+  idCliente: number;
+
   @Column({ type: 'varchar', length: 20 })
   metodoPago: string;
 

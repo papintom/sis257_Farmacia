@@ -8,6 +8,8 @@ import InputText from 'primevue/inputtext'
 import { computed, ref, watch } from 'vue'
 
 const ENDPOINT = 'clientes'
+
+
 const props = defineProps({
   mostrar: Boolean,
   cliente: {
@@ -15,6 +17,10 @@ const props = defineProps({
     default: () => ({}) as Cliente,
   },
   modoEdicion: Boolean,
+  ciInicial: {
+    type: String,
+    default: ''
+  }
 })
 const emit = defineEmits(['guardar', 'close'])
 
@@ -26,11 +32,14 @@ const dialogVisible = computed({
 })
 
 const cliente = ref<Cliente>({ ...props.cliente })
+
 watch(
-  () => props.cliente,
-  (newVal) => {
-    cliente.value = { ...newVal }
-  },
+  () => props.mostrar,
+  (val) => {
+    if (val) {
+      cliente.value.ci = props.ciInicial
+    }
+  }
 )
 
 async function handleSave() {
@@ -42,14 +51,21 @@ async function handleSave() {
       telefono: cliente.value.telefono,
       direccion: cliente.value.direccion,
     }
+
+    let response
+
     if (props.modoEdicion) {
       await http.patch(`${ENDPOINT}/${cliente.value.id}`, body)
+      response = { data: cliente.value }
     } else {
-      await http.post(ENDPOINT, body)
+      response = await http.post(ENDPOINT, body)
     }
-    emit('guardar')
+
+    emit('guardar', response.data)
+
     cliente.value = {} as Cliente
     dialogVisible.value = false
+
   } catch (error: any) {
     alert(error?.response?.data?.message)
   }

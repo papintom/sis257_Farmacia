@@ -21,38 +21,46 @@ const ciCliente = ref('')
 const cliente = ref<any>(null)
 const idCliente = ref(0)
 const mostrarClienteDialog = ref(false)
+const ciTemporal = ref('')
 
 function agregarCliente() {
     mostrarClienteDialog.value = true
 }
 
 async function buscarCliente() {
-
     try {
-
-        const response = await http.get(
-            `clientes/ci/${ciCliente.value}`
-        )
+        const response = await http.get(`clientes/ci/${ciCliente.value}`)
 
         cliente.value = response.data
-
         idCliente.value = cliente.value.id
 
     } catch (error) {
-
         cliente.value = null
         idCliente.value = 0
 
+        // GUARDAMOS EL CI QUE NO EXISTE
+        ciTemporal.value = ciCliente.value
+
         alert('Cliente no encontrado')
-
     }
-
 }
 async function obtenerClientes() {
 
     cliente.value = await http
         .get('clientes')
         .then((res) => res.data)
+
+}
+function onClienteCreado(clienteNuevo: any) {
+
+    mostrarClienteDialog.value = false
+
+    // guardar cliente seleccionado
+    cliente.value = clienteNuevo
+    idCliente.value = clienteNuevo.id
+
+    // autocompletar CI input
+    ciCliente.value = clienteNuevo.ci
 
 }
 
@@ -196,6 +204,22 @@ onMounted(() => {
     obtenerClientes()
 
 })
+
+/* =========================
+   Limpiar datos después cancelar venta
+========================= */
+
+function resetVenta() {
+    ciCliente.value = ''
+    cliente.value = null
+    idCliente.value = 0
+
+    metodoPago.value = ''
+
+    detalleVenta.value = []
+
+    ciTemporal.value = ''
+}
 </script>
 
 <template>
@@ -251,7 +275,7 @@ onMounted(() => {
                             Cliente
                         </label>
 
-                        <InputText :value="cliente ? cliente.nombre + ' ' + cliente.apellido : ''" disabled
+                        <InputText :value="`${cliente?.nombre ?? ''} ${cliente?.apellido ?? ''}`.trim()" disabled
                             style="width: 100%" />
                     </div>
 
@@ -280,19 +304,23 @@ onMounted(() => {
                     <span>Resumen de Venta</span>
                 </h2>
             </div>
-            
+
             <VentaDetalle :detalleVenta="detalleVenta" :total="total" @eliminar="eliminarProducto" />
 
-            <div class="p-4 d-flex justify-content-end">
+            <div class="p-4 d-flex justify-content-end gap-2">
                 <button class="btn btn-primary btn-lg px-5 shadow-sm" @click="guardarVenta">
                     <i class="bi bi-check-circle me-2"></i>
                     Finalizar y Guardar Venta
+                </button>
+                <button class="btn btn-danger btn-lg px-5 shadow-sm" @click="resetVenta">
+                    <i class="bi bi-check-circle me-2"></i>
+                    Limpiar
                 </button>
             </div>
         </section>
 
         <ClienteSave :mostrar="mostrarClienteDialog" :clientes="{}" :modoEdicion="false"
-            @close="mostrarClienteDialog = false" @guardar="mostrarClienteDialog = false" />
+            @close="mostrarClienteDialog = false" :ciInicial="ciTemporal" @guardar="onClienteCreado" />
     </AdminLayout>
 </template>
 
