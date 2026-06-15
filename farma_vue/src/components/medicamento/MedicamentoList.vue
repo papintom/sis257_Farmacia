@@ -72,6 +72,12 @@ defineExpose({ obtenerLista })
           </template>
         </Column>
 
+        <Column header="Receta">
+          <template #body="{ data }">
+            {{ data.receta ? 'Sí' : 'No' }}
+          </template>
+        </Column>
+
         <Column header="Fotografía">
           <template #body="{ data }">
             <img :src="data.fotografia" alt="Medicamento" class="product-thumb" />

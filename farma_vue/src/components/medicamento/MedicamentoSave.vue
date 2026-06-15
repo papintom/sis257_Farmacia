@@ -2,7 +2,7 @@
 import type { Medicamento } from '@/models/medicamento'
 import type { Categoria } from '@/models/categoria'
 import http from '@/plugins/axios'
-import { InputMask, InputNumber, Select, Textarea } from 'primevue'
+import { Checkbox, InputMask, InputNumber, Select, Textarea } from 'primevue'
 import Button from 'primevue/button'
 import Dialog from 'primevue/dialog'
 import InputText from 'primevue/inputtext'
@@ -124,6 +124,11 @@ watch(
         <label for="forma" class="font-semibold w-3">Forma</label>
         <Select v-model="medicamento.idFormaFarmaceutica" :options="formasFarmaceuticas" optionLabel="nombre"
           optionValue="id" />
+      </div>
+      <div class="flex items-center gap-4 mb-4">
+        <label for="receta" class="font-semibold w-3">Receta</label>
+
+        <Checkbox id="receta" v-model="medicamento.receta" binary />
       </div>
       <div class="flex items-center gap-4 mb-4">
         <label for="precio" class="font-semibold w-3">Precio</label>
