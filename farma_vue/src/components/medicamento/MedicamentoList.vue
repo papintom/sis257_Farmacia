@@ -64,7 +64,7 @@ defineExpose({ obtenerLista })
 
         <Column field="concentracion" header="Concentración" />
 
-        <Column field="forma" header="Forma" />
+        <Column field="formaFarmaceutica.nombre" header="Forma" />
 
         <Column field="precio" header="Precio">
           <template #body="{ data }">

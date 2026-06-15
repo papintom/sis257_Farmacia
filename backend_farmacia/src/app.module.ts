@@ -13,6 +13,7 @@ import { LotesModule } from './lotes/lotes.module';
 import { ProveedoresModule } from './proveedores/proveedores.module';
 import { AuthModule } from './auth/auth.module';
 import { DashboardModule } from './ventas/dashboard.module';
+import { FormasFarmaceuticasModule } from './formas-farmaceuticas/formas-farmaceuticas.module';
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -37,6 +38,7 @@ import { DashboardModule } from './ventas/dashboard.module';
     ProveedoresModule,
     AuthModule,
     DashboardModule,
+    FormasFarmaceuticasModule,
   ],
   controllers: [AppController],
   providers: [AppService],

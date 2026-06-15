@@ -6,6 +6,9 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
   JoinColumn,
+  DeleteDateColumn,
+  UpdateDateColumn,
+  CreateDateColumn,
 } from 'typeorm';
 
 @Entity('detalle_venta')
@@ -27,6 +30,15 @@ export class DetalleVenta {
 
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   subtotal: number;
+
+  @CreateDateColumn({ name: 'fecha_creacion' })
+  fechaCreacion: Date;
+
+  @UpdateDateColumn({ name: 'fecha_modificacion' })
+  fechaModificacion: Date;
+
+  @DeleteDateColumn({ name: 'fecha_eliminacion' })
+  fechaEliminacion: Date;
 
   @ManyToOne(() => Venta, (venta) => venta.detalles)
   @JoinColumn({ name: 'id_Venta', referencedColumnName: 'id' })

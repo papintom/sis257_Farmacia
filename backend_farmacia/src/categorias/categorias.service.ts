@@ -34,7 +34,7 @@ export class CategoriaService {
   async findAll(): Promise<Categoria[]> {
     return this.categoriaRepository.find({
       order: { id: 'ASC' },
-      relations: ['medicamentos'],
+      relations: ['medicamento'],
     });
   }
 

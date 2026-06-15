@@ -1,69 +1,120 @@
 <script setup lang="ts">
 import AdminLayout from '@/components/Layout/AdminLayout.vue'
+
 import CategoriaList from '@/components/categoria/CategoriaList.vue'
 import CategoriaSave from '@/components/categoria/CategoriaSave.vue'
+
+import FormaFarmaceuticaList from '@/components/formaFarmaceutica/FormaFarmaceuticaList.vue'
+import FormaFarmaceuticaSave from '@/components/formaFarmaceutica/FormaFarmaceuticaSave.vue'
+
 import { ref } from 'vue'
 
-const mostrarDialog = ref(false)
-const categoriaListRef = ref<typeof CategoriaList | null>(null)
+/* =========================
+   CATEGORÍAS
+========================= */
+const mostrarCategoria = ref(false)
+const categoriaListRef = ref<any>(null)
 const categoriaEdit = ref<any>(null)
 
-function handleCreate() {
+function handleCreateCategoria() {
     categoriaEdit.value = null
-    mostrarDialog.value = true
+    mostrarCategoria.value = true
 }
 
-function handleEdit(categoria: any) {
+function handleEditCategoria(categoria: any) {
     categoriaEdit.value = categoria
-    mostrarDialog.value = true
+    mostrarCategoria.value = true
 }
 
-function handleCloseDialog() {
-    mostrarDialog.value = false
-}
-
-function handleGuardar() {
+function handleGuardarCategoria() {
     categoriaListRef.value?.obtenerLista()
+}
+
+/* =========================
+   FORMAS FARMACÉUTICAS
+========================= */
+const mostrarForma = ref(false)
+const formaListRef = ref<any>(null)
+const formaEdit = ref<any>(null)
+
+function handleCreateForma() {
+    formaEdit.value = null
+    mostrarForma.value = true
+}
+
+function handleEditForma(forma: any) {
+    formaEdit.value = forma
+    mostrarForma.value = true
+}
+
+function handleGuardarForma() {
+    formaListRef.value?.obtenerLista()
 }
 </script>
 
 <template>
     <AdminLayout>
+
+        <!-- =========================
+         CATEGORÍAS
+    ========================= -->
         <div class="page-heading">
             <div class="page-heading-copy">
                 <span class="page-icon">
-                    <i class="bi bi-person-check" aria-hidden="true"></i>
+                    <i class="bi bi-grid"></i>
                 </span>
                 <div>
                     <p class="eyebrow mb-1">Gestión</p>
                     <h1 class="h3 mb-1">Categorías</h1>
-                    <p class="text-muted mb-0">Administra categorias.</p>
+                    <p class="text-muted mb-0">Administra categorías.</p>
                 </div>
             </div>
+
             <div class="heading-actions">
-                <button class="btn btn-primary btn-sm" @click="handleCreate">
-                    <i class="bi bi-person-plus" aria-hidden="true"></i>
+                <button class="btn btn-primary btn-sm" @click="handleCreateCategoria">
+                    <i class="bi bi-plus"></i>
                     Nueva Categoría
                 </button>
             </div>
         </div>
 
         <section class="panel mt-3">
-            <div class="panel-header">
+            <CategoriaList ref="categoriaListRef" @edit="handleEditCategoria" />
+        </section>
+
+        <CategoriaSave :mostrar="mostrarCategoria" :categoria="categoriaEdit" :modoEdicion="!!categoriaEdit"
+            @guardar="handleGuardarCategoria" @close="mostrarCategoria = false" />
+
+        <!-- =========================
+         FORMAS FARMACÉUTICAS
+    ========================= -->
+        <div class="page-heading mt-5">
+            <div class="page-heading-copy">
+                <span class="page-icon">
+                    <i class="bi bi-capsule"></i>
+                </span>
                 <div>
-                    <h2 class="h5 mb-1 section-title">
-                        <i class="bi bi-table" aria-hidden="true"></i>
-                        <span>Lista de Categorías</span>
-                    </h2>
-                    <p class="text-muted mb-0">Busca, revisa y gestiona los categorias registrados.</p>
+                    <p class="eyebrow mb-1">Gestión</p>
+                    <h1 class="h3 mb-1">Formas Farmacéuticas</h1>
+                    <p class="text-muted mb-0">Administra formas farmacéuticas.</p>
                 </div>
             </div>
 
-            <CategoriaList ref="categoriaListRef" @edit="handleEdit" />
+            <div class="heading-actions">
+                <button class="btn btn-primary btn-sm" @click="handleCreateForma">
+                    <i class="bi bi-plus"></i>
+                    Nueva Forma
+                </button>
+            </div>
+        </div>
+
+        <section class="panel mt-3">
+            <FormaFarmaceuticaList ref="formaListRef" @edit="handleEditForma" />
         </section>
 
-        <CategoriaSave :mostrar="mostrarDialog" :categoria="categoriaEdit" :modoEdicion="!!categoriaEdit"
-            @guardar="handleGuardar" @close="handleCloseDialog" />
+        <FormaFarmaceuticaSave :mostrar="mostrarForma" :formasFarmaceutica="formaEdit" :modoEdicion="!!formaEdit"
+            @guardar="handleGuardarForma" @close="mostrarForma = false" />
+
     </AdminLayout>
 </template>
 
@@ -75,7 +126,7 @@ function handleGuardar() {
     text-transform: uppercase;
 }
 
-.mt-3 {
-    margin-top: 1rem;
+.mt-5 {
+    margin-top: 2rem;
 }
 </style>

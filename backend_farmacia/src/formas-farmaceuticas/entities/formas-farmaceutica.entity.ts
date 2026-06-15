@@ -1,32 +1,31 @@
 import { Medicamento } from 'src/medicamentos/entities/medicamento.entity';
 import {
-  Entity,
   Column,
-  PrimaryGeneratedColumn,
   CreateDateColumn,
-  UpdateDateColumn,
   DeleteDateColumn,
+  Entity,
   OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 
-@Entity('categoria')
-export class Categoria {
+@Entity('formas_farmaceuticas')
+export class FormasFarmaceutica {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'varchar', length: 100 })
+  @Column({ type: 'varchar', length: 100, unique: true })
   nombre: string;
-
-  @Column({ type: 'text', nullable: true })
-  descripcion: string;
 
   @CreateDateColumn({ name: 'fecha_creacion' })
   fechaCreacion: Date;
+
   @UpdateDateColumn({ name: 'fecha_modificacion' })
   fechaModificacion: Date;
+
   @DeleteDateColumn({ name: 'fecha_eliminacion' })
   fechaEliminacion: Date;
-  
-  @OneToMany(() => Medicamento, (medicamento) => medicamento.categoria)
+
+  @OneToMany(() => Medicamento, (medicamento) => medicamento.formaFarmaceutica)
   medicamento: Medicamento[];
 }

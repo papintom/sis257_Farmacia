@@ -1,4 +1,5 @@
 import { Categoria } from 'src/categorias/entities/categoria.entity';
+import { FormasFarmaceutica } from 'src/formas-farmaceuticas/entities/formas-farmaceutica.entity';
 import { Lote } from 'src/lotes/entities/lote.entity';
 import {
   Entity,
@@ -16,6 +17,11 @@ import {
 export class Medicamento {
   @PrimaryGeneratedColumn()
   id: number;
+    @Column({ name: 'id_categoria', type: 'int' })
+  idCategoria: number;
+
+  @Column({ name: 'id_forma_farmaceutica', type: 'int' })
+  idFormaFarmaceutica: number;
 
   @Column({ type: 'varchar', length: 80 })
   nombre: string;
@@ -26,8 +32,8 @@ export class Medicamento {
   @Column({ type: 'varchar', length: 50 })
   concentracion: string;
 
-  @Column({ type: 'varchar', length: 20 })
-  forma: string;
+  @Column({ type: 'boolean', default: false })
+  receta: boolean;
 
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   precio: number;
@@ -45,7 +51,11 @@ export class Medicamento {
   @OneToMany(() => Lote, (lote) => lote.medicamento)
   lotes: Lote[];
 
-  @ManyToOne(() => Categoria, (categoria) => categoria.id)
+  @ManyToOne(() => Categoria, (categoria) => categoria.medicamento)
   @JoinColumn({ name: 'id_categoria', referencedColumnName: 'id' })
   categoria: Categoria;
+
+  @ManyToOne(() => FormasFarmaceutica, (forma) => forma.medicamento)
+  @JoinColumn({ name: 'id_forma_farmaceutica', referencedColumnName: 'id' })
+  formaFarmaceutica: FormasFarmaceutica;
 }

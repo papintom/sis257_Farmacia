@@ -16,38 +16,37 @@ export class MedicamentoService {
     private medicamentoRepository: Repository<Medicamento>,
   ) {}
 
-  async create(
-    createMedicamentoDto: CreateMedicamentoDto,
-  ): Promise<Medicamento> {
-    let medicamento = await this.medicamentoRepository.findOneBy({
+  async create(createMedicamentoDto: CreateMedicamentoDto): Promise<Medicamento> {
+  const existe = await this.medicamentoRepository.findOne({
+    where: {
       nombre: createMedicamentoDto.nombre.trim(),
       concentracion: createMedicamentoDto.concentracion,
-      forma: createMedicamentoDto.forma,
-    });
+    },
+  });
 
-    if (medicamento) {
-      throw new ConflictException('El medicamento ya existe');
-    }
-
-    medicamento = new Medicamento();
-    Object.assign(medicamento, createMedicamentoDto);
-
-    medicamento.categoria = { id: createMedicamentoDto.idCategoria } as any;
-
-    return this.medicamentoRepository.save(medicamento);
+  if (existe) {
+    throw new ConflictException('El medicamento ya existe');
   }
+
+  const medicamento = this.medicamentoRepository.create(createMedicamentoDto);
+
+  medicamento.categoria = { id: createMedicamentoDto.idCategoria } as any;
+  medicamento.formaFarmaceutica = { id: createMedicamentoDto.idFormaFarmaceutica } as any;
+
+  return this.medicamentoRepository.save(medicamento);
+}
 
   async findAll(): Promise<Medicamento[]> {
     return this.medicamentoRepository.find({
       order: { id: 'ASC' },
-      relations: ['categoria'],
+      relations: ['categoria', 'formaFarmaceutica'],
     });
   }
 
   async findOne(id: number): Promise<Medicamento> {
     const medicamento = await this.medicamentoRepository.findOne({
       where: { id },
-      relations: ['categoria'],
+      relations: ['categoria', 'formaFarmaceutica'],
     });
 
     if (!medicamento) {

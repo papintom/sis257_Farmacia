@@ -1,5 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
+  IsBIC,
+  IsBoolean,
   IsDefined,
   IsIn,
   IsInt,
@@ -13,6 +15,11 @@ export class CreateMedicamentoDto {
   @IsDefined({ message: 'El campo "categoria" es obligatorio.' })
   @IsInt({ message: 'El id del categoría debe ser un número entero' })
   readonly idCategoria: number;
+
+  @ApiProperty()
+  @IsDefined({ message: 'El campo "forma_farmaceutica" es obligatorio.' })
+  @IsInt({ message: 'El id de la forma farmacéutica debe ser un número entero' })
+  readonly idFormaFarmaceutica: number;
 
   @ApiProperty()
   @IsNotEmpty({ message: 'El campo "nombre" es obligatorio.' })
@@ -40,12 +47,9 @@ export class CreateMedicamentoDto {
   readonly concentracion: string;
 
   @ApiProperty()
-  @IsNotEmpty({ message: 'El campo "forma" es obligatorio.' })
-  @IsString({ message: 'El campo "forma" debe ser una cadena de texto.' })
-  @MaxLength(20, {
-    message: 'El campo "forma" no puede exceder los 20 caracteres.',
-  })
-  readonly forma: string;
+  @IsBoolean({ message: 'El campo "receta" debe ser un valor booleano.' })
+  @IsDefined({ message: 'El campo "receta" es obligatorio.' })
+  readonly receta: boolean;
 
   @ApiProperty()
   @IsDefined({ message: 'El campo "precio" es obligatorio.' })
