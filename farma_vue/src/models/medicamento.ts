@@ -1,9 +1,14 @@
 import type { Categoria } from './categoria'
 import type { FormaFarmaceutica } from './formaFarmaceutica'
+import type { Laboratorio } from './laboratorio'
+import type { TipoReceta } from './tipoReceta'
+
 export interface Medicamento {
   id: number
   idCategoria: number
   idFormaFarmaceutica: number
+  idLaboratorio?: number
+  idTipoReceta?: number
   nombre: string
   descripcion: string
   concentracion: string
@@ -11,5 +16,7 @@ export interface Medicamento {
   precio: number
   fotografia: string
   categoria: Categoria
-  forma: FormaFarmaceutica
+  formaFarmaceutica?: FormaFarmaceutica
+  laboratorio?: Laboratorio
+  tipoReceta?: TipoReceta
 }

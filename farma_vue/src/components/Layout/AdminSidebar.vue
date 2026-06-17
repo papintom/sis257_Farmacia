@@ -30,6 +30,8 @@ const navigationItems: NavItem[] = [
   { name: 'Ventas', icon: 'bi-cart-check', path: '/ventas' },
   { name: 'Clientes', icon: 'bi-person-check', path: '/clientes' },
   { name: 'Categorías', icon: 'bi-tag', path: '/categorias' },
+  { name: 'Laboratorios', icon: 'bi-building-gear', path: '/laboratorios' },
+  { name: 'Tipos de Receta', icon: 'bi-file-earmark-medical', path: '/tipo-recetas' },
   { name: 'Proveedores', icon: 'bi-building', path: '/proveedores' },
   { name: 'Lotes', icon: 'bi-boxes', path: '/lotes' },
   { name: 'Historial de Ventas', icon: 'bi-clock-history', path: '/historial-ventas' },

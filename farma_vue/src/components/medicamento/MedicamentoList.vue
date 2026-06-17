@@ -32,10 +32,13 @@ async function eliminar() {
 }
 
 const medicamentoesFiltrados = computed(() => {
+  const query = busqueda.value.toLowerCase()
   return medicamentoes.value.filter(
     (medicamento) =>
-      medicamento.nombre.toLowerCase().includes(busqueda.value.toLowerCase()) ||
-      medicamento.categoria.nombre.toLowerCase().includes(busqueda.value.toLowerCase()),
+      medicamento.nombre.toLowerCase().includes(query) ||
+      (medicamento.categoria?.nombre && medicamento.categoria.nombre.toLowerCase().includes(query)) ||
+      (medicamento.laboratorio?.nombre && medicamento.laboratorio.nombre.toLowerCase().includes(query)) ||
+      (medicamento.tipoReceta?.nombre && medicamento.tipoReceta.nombre.toLowerCase().includes(query)),
   )
 })
 
@@ -85,6 +88,10 @@ defineExpose({ obtenerLista })
         </Column>
 
         <Column field="categoria.nombre" header="Categoría" sortable />
+
+        <Column field="laboratorio.nombre" header="Laboratorio" sortable />
+
+        <Column field="tipoReceta.nombre" header="Tipo Receta" sortable />
 
         <Column header="Acciones">
           <template #body="{ data }">

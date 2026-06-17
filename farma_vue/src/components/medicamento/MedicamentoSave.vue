@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type { Medicamento } from '@/models/medicamento'
 import type { Categoria } from '@/models/categoria'
+import type { Laboratorio } from '@/models/laboratorio'
+import type { TipoReceta } from '@/models/tipoReceta'
 import http from '@/plugins/axios'
 import { Checkbox, InputMask, InputNumber, Select, Textarea } from 'primevue'
 import Button from 'primevue/button'
@@ -28,6 +30,8 @@ const dialogVisible = computed({
 
 const categorias = ref<Categoria[]>([])
 const formasFarmaceuticas = ref<any[]>([])
+const laboratorios = ref<Laboratorio[]>([])
+const tipoRecetas = ref<TipoReceta[]>([])
 const medicamento = ref<Medicamento>({ ...props.medicamento })
 const idCategoria = ref<number>(0)
 const idFormaFarmaceutica = ref<number>(0)
@@ -50,6 +54,8 @@ async function handleSave() {
     const body = {
       idCategoria: medicamento.value.idCategoria,
       idFormaFarmaceutica: medicamento.value.idFormaFarmaceutica,
+      idLaboratorio: medicamento.value.idLaboratorio || null,
+      idTipoReceta: medicamento.value.idTipoReceta || null,
       nombre: medicamento.value.nombre,
       descripcion: medicamento.value.descripcion,
       concentracion: medicamento.value.concentracion,
@@ -72,6 +78,8 @@ async function handleSave() {
 async function cargarDatos() {
   categorias.value = await http.get('categorias').then(res => res.data)
   formasFarmaceuticas.value = await http.get('formas-farmaceuticas').then(res => res.data)
+  laboratorios.value = await http.get('laboratorios').then(res => res.data)
+  tipoRecetas.value = await http.get('tipo-recetas').then(res => res.data)
 }
 
 watch(
@@ -89,6 +97,12 @@ watch(
 
       medicamento.value.idFormaFarmaceutica =
         props.medicamento.idFormaFarmaceutica
+
+      medicamento.value.idLaboratorio =
+        props.medicamento.laboratorio?.id ?? props.medicamento.idLaboratorio
+
+      medicamento.value.idTipoReceta =
+        props.medicamento.tipoReceta?.id ?? props.medicamento.idTipoReceta
     } else {
       medicamento.value = {
         receta: false,
@@ -124,6 +138,16 @@ watch(
         <label for="forma" class="font-semibold w-3">Forma</label>
         <Select v-model="medicamento.idFormaFarmaceutica" :options="formasFarmaceuticas" optionLabel="nombre"
           optionValue="id" />
+      </div>
+      <div class="flex items-center gap-4 mb-4">
+        <label for="laboratorio" class="font-semibold w-3">Laboratorio</label>
+        <Select v-model="medicamento.idLaboratorio" :options="laboratorios" optionLabel="nombre" optionValue="id"
+          placeholder="Seleccionar Laboratorio" showClear />
+      </div>
+      <div class="flex items-center gap-4 mb-4">
+        <label for="tipoReceta" class="font-semibold w-3">Tipo Receta</label>
+        <Select v-model="medicamento.idTipoReceta" :options="tipoRecetas" optionLabel="nombre" optionValue="id"
+          placeholder="Seleccionar Tipo Receta" showClear />
       </div>
       <div class="flex items-center gap-4 mb-4">
         <label for="receta" class="font-semibold w-3">Receta</label>
