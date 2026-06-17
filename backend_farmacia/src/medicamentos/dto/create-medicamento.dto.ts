@@ -6,6 +6,7 @@ import {
   IsIn,
   IsInt,
   IsNotEmpty,
+  IsOptional,
   IsString,
   MaxLength,
 } from 'class-validator';
@@ -20,6 +21,16 @@ export class CreateMedicamentoDto {
   @IsDefined({ message: 'El campo "forma_farmaceutica" es obligatorio.' })
   @IsInt({ message: 'El id de la forma farmacéutica debe ser un número entero' })
   readonly idFormaFarmaceutica: number;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsInt({ message: 'El id del laboratorio debe ser un número entero' })
+  readonly idLaboratorio?: number;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsInt({ message: 'El id del tipo de receta debe ser un número entero' })
+  readonly idTipoReceta?: number;
 
   @ApiProperty()
   @IsNotEmpty({ message: 'El campo "nombre" es obligatorio.' })

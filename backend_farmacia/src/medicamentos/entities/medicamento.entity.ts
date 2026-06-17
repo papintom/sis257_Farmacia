@@ -1,6 +1,8 @@
 import { Categoria } from 'src/categorias/entities/categoria.entity';
 import { FormasFarmaceutica } from 'src/formas-farmaceuticas/entities/formas-farmaceutica.entity';
 import { Lote } from 'src/lotes/entities/lote.entity';
+import { Laboratorio } from 'src/laboratorios/entities/laboratorio.entity';
+import { TipoReceta } from 'src/tipo-recetas/entities/tipo-receta.entity';
 import {
   Entity,
   Column,
@@ -22,6 +24,12 @@ export class Medicamento {
 
   @Column({ name: 'id_forma_farmaceutica', type: 'int' })
   idFormaFarmaceutica: number;
+
+  @Column({ name: 'id_laboratorio', type: 'int', nullable: true })
+  idLaboratorio: number;
+
+  @Column({ name: 'id_tipo_receta', type: 'int', nullable: true })
+  idTipoReceta: number;
 
   @Column({ type: 'varchar', length: 80 })
   nombre: string;
@@ -58,4 +66,12 @@ export class Medicamento {
   @ManyToOne(() => FormasFarmaceutica, (forma) => forma.medicamento)
   @JoinColumn({ name: 'id_forma_farmaceutica', referencedColumnName: 'id' })
   formaFarmaceutica: FormasFarmaceutica;
+
+  @ManyToOne(() => Laboratorio, (laboratorio) => laboratorio.medicamentos)
+  @JoinColumn({ name: 'id_laboratorio', referencedColumnName: 'id' })
+  laboratorio: Laboratorio;
+
+  @ManyToOne(() => TipoReceta, (tipoReceta) => tipoReceta.medicamentos)
+  @JoinColumn({ name: 'id_tipo_receta', referencedColumnName: 'id' })
+  tipoReceta: TipoReceta;
 }

@@ -14,6 +14,8 @@ import { ProveedoresModule } from './proveedores/proveedores.module';
 import { AuthModule } from './auth/auth.module';
 import { DashboardModule } from './ventas/dashboard.module';
 import { FormasFarmaceuticasModule } from './formas-farmaceuticas/formas-farmaceuticas.module';
+import { TipoRecetasModule } from './tipo-recetas/tipo-recetas.module';
+import { LaboratoriosModule } from './laboratorios/laboratorios.module';
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -39,6 +41,8 @@ import { FormasFarmaceuticasModule } from './formas-farmaceuticas/formas-farmace
     AuthModule,
     DashboardModule,
     FormasFarmaceuticasModule,
+    TipoRecetasModule,
+    LaboratoriosModule,
   ],
   controllers: [AppController],
   providers: [AppService],
