@@ -16,10 +16,10 @@ export class DetalleVenta {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ name: 'id_Venta', type: 'int' })
+  @Column({ name: 'id_venta', type: 'int' })
   idVenta: number;
 
-  @Column({ name: 'id_Lote', type: 'int' })
+  @Column({ name: 'id_lote', type: 'int' })
   idLote: number;
 
   @Column({ type: 'int' })
@@ -41,10 +41,10 @@ export class DetalleVenta {
   fechaEliminacion: Date;
 
   @ManyToOne(() => Venta, (venta) => venta.detalles)
-  @JoinColumn({ name: 'id_Venta', referencedColumnName: 'id' })
+  @JoinColumn({ name: 'id_venta', referencedColumnName: 'id' })
   venta: Venta;
 
   @ManyToOne(() => Lote)
-  @JoinColumn({ name: 'id_Lote', referencedColumnName: 'id' })
+  @JoinColumn({ name: 'id_lote', referencedColumnName: 'id' })
   lote: Lote;
 }
