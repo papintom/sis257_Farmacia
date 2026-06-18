@@ -1725,3 +1725,75 @@ html[data-theme='dark'] .p-datatable-tbody > tr:hover {
   font-weight: 600 !important;
   font-size: 0.9 rem !important;
 }
+:deep(.p-inputtext:hover) {
+  border-color: var(--admin-primary);
+}
+
+:deep(.p-inputtext:focus) {
+  border-color: var(--admin-primary);
+  box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.2);
+}
+.btn-outline-secondary:hover,
+.btn-outline-secondary:focus {
+  border-color: var(--admin-primary);
+  background: #eaf2ff;
+  color: var(--admin-primary-dark);
+}
+:deep(.p-inputtext:hover) {
+  border-color: var(--admin-primary);
+}
+
+:deep(.p-inputtext:focus) {
+  border-color: var(--admin-primary);
+  background-color: white;
+}
+:deep(.p-inputtext) {
+  background-color: white !important;
+  color: #212529 !important;
+  border-color: #ced4da;
+}
+:deep(.p-inputgroupaddon) {
+  background-color: white !important;
+  color: var(--admin-primary);
+  border-color: #ced4da;
+}
+
+:deep(.p-inputtext) {
+  background-color: white !important;
+  color: #212529 !important;
+  border-color: #ced4da;
+}
+
+:deep(.p-inputtext:hover) {
+  border-color: var(--admin-primary) !important;
+}
+
+:deep(.p-inputtext:focus) {
+  border-color: var(--admin-primary) !important;
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15) !important;
+}
+
+/* ADDON BLANCO FORZADO */
+html[data-theme='light'] .search-addon {
+  background-color: #ffffff !important;
+  border: 1px solid #ced4da !important;
+  color: var(--admin-primary) !important;
+}
+
+/* ICONO */
+html[data-theme='light'] .search-addon i {
+  color: var(--admin-primary) !important;
+}
+
+/* INPUT */
+html[data-theme='light'] .search-input {
+  background-color: #ffffff !important;
+  border: 1px solid #ced4da !important;
+  color: #212529 !important;
+}
+
+/* FOCUS */
+html[data-theme='light'] .search-input:focus {
+  border-color: var(--admin-primary) !important;
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15) !important;
+}

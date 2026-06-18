@@ -77,8 +77,15 @@ function rowClass(data: any) {
                 </p>
             </div>
 
-            <div style="width: 350px">
-                <InputText v-model="busquedaMedicamento" placeholder="Buscar medicamento..." />
+            <div style="width: 400px">
+
+                <div style="width: 500px" class="search-box">
+                    <InputGroup>
+
+                        <InputText v-model="busquedaMedicamento" type="text" placeholder="Buscar nombre cliente ,ci "
+                            class="search-input" />
+                    </InputGroup>
+                </div>
             </div>
         </div>
 

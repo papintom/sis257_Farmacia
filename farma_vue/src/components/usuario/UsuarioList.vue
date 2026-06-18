@@ -51,10 +51,16 @@ defineExpose({ obtenerLista })
 <template>
   <div>
     <div class="col-7 pl-0 mt-3">
-      <InputGroup>
-        <InputGroupAddon><i class="pi pi-search"></i></InputGroupAddon>
-        <InputText v-model="busqueda" type="text" placeholder="Buscar por nombre, apellido, correo" />
-      </InputGroup>
+      <div style="width: 320px" class="search-box">
+        <InputGroup>
+          <InputGroupAddon class="search-addon">
+            <i class="pi pi-search"></i>
+          </InputGroupAddon>
+          <InputText v-model="busqueda" type="text" placeholder="Buscar por nombre, apellido, correo"
+            class="search-input" />
+        </InputGroup>
+      </div>
+
     </div>
     <div class="table-responsive">
       <table class="table align-middle mb-0">

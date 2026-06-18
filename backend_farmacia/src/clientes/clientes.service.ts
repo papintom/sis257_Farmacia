@@ -7,7 +7,7 @@ import { CreateClienteDto } from './dto/create-cliente.dto';
 import { UpdateClienteDto } from './dto/update-cliente.dto';
 import { Cliente } from './entities/cliente.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 
 @Injectable()
 export class ClienteService {
@@ -61,7 +61,16 @@ export class ClienteService {
     return this.clienteRepository.softRemove(cliente);
   }
 
-  async buscarPorCi(ci: string): Promise<Cliente> {
+async buscar(texto: string): Promise<Cliente[]> {
+  return this.clienteRepository.find({
+    where: [
+      { ci: ILike(`%${texto}%`) },
+      { nombre: ILike(`%${texto}%`) },
+    ],
+    order: { id: 'ASC' },
+  });
+}
+async buscarPorCi(ci: string): Promise<Cliente> {
     const cliente = await this.clienteRepository.findOne({
       where: { ci },
     });

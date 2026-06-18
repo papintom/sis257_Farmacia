@@ -29,7 +29,10 @@ export class ClienteController {
   buscarPorCi(@Param('ci') ci: string) {
     return this.clienteService.buscarPorCi(ci);
   }
-
+  @Get('buscar/:texto')
+buscar(@Param('texto') texto: string) {
+  return this.clienteService.buscar(texto);
+}
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.clienteService.findOne(+id);

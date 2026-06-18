@@ -32,13 +32,11 @@ async function eliminar() {
 }
 
 const clientesFiltrados = computed(() => {
-  return clientes.value.filter(
-    (cliente) =>
-      cliente.ci.toLowerCase().includes(busqueda.value.toLowerCase()) ||
-      cliente.nombre.toLowerCase().includes(busqueda.value.toLowerCase()) ||
-      //cliente.apellido.toLowerCase().includes(busqueda.value.toLowerCase()) ||
-      cliente.telefono.toLowerCase().includes(busqueda.value.toLowerCase()) ||
-      cliente.direccion.toLowerCase().includes(busqueda.value.toLowerCase()),
+  const texto = busqueda.value.toLowerCase()
+
+  return clientes.value.filter(cliente =>
+    cliente.ci?.toLowerCase().includes(texto) ||
+    cliente.nombre?.toLowerCase().includes(texto)
   )
 })
 
@@ -52,15 +50,16 @@ defineExpose({ obtenerLista })
   <div class="panel">
     <div class="panel-header">
 
-      <div style="width: 320px">
+      <div style="width: 320px" class="search-box">
         <InputGroup>
-          <InputGroupAddon>
+          <InputGroupAddon class="search-addon">
             <i class="pi pi-search"></i>
           </InputGroupAddon>
-          <InputText v-model="busqueda" placeholder="Buscar cliente" />
+          <InputText v-model="busqueda" placeholder="Buscar cliente" class="search-input" />
         </InputGroup>
       </div>
     </div>
+
 
     <div class="table-responsive">
       <table class="table align-middle mb-0">

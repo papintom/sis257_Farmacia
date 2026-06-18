@@ -50,12 +50,17 @@ defineExpose({ obtenerLista })
   <div class="panel">
     <div class="panel-header">
       <div style="width: 600px">
-        <InputGroup>
-          <InputGroupAddon>
-            <i class="pi pi-search"></i>
-          </InputGroupAddon>
-          <InputText v-model="busqueda" class="w-100" placeholder="Buscar medicamento o categoría" />
-        </InputGroup>
+        <div style="width: 320px" class="search-box">
+          <InputGroup>
+            <InputGroupAddon class="search-addon">
+              <i class="pi pi-search"></i>
+            </InputGroupAddon>
+            <InputText v-model="busqueda" type="text" placeholder="Buscar medicamento o categoría"
+              class="search-input" />
+          </InputGroup>
+        </div>
+
+
       </div>
     </div>
 

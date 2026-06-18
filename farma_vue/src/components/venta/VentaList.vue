@@ -60,8 +60,17 @@ onMounted(() => {
     <div class="panel">
         <div class="panel-header">
 
-            <div style="width: 600px">
-                <InputText v-model="busqueda" class="w-100" placeholder="Buscar por nombre, apellido o CI" />
+
+            <div style="width: 400px">
+                <div style="width: 320px" class="search-box">
+                    <InputGroup>
+                        <InputGroupAddon class="search-addon">
+                            <i class="pi pi-search"></i>
+                        </InputGroupAddon>
+                        <InputText v-model="busqueda" type="text" placeholder="Buscar nombre cliente ,ci "
+                            class="search-input" />
+                    </InputGroup>
+                </div>
             </div>
         </div>
 

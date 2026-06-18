@@ -49,12 +49,15 @@ defineExpose({ obtenerLista })
         <div class="panel-header">
 
             <div style="width: 320px">
-                <InputGroup>
-                    <InputGroupAddon>
-                        <i class="pi pi-search"></i>
-                    </InputGroupAddon>
-                    <InputText v-model="busqueda" placeholder="Buscar formasFarmaceutica" />
-                </InputGroup>
+                <div style="width: 320px" class="search-box">
+                    <InputGroup>
+                        <InputGroupAddon class="search-addon">
+                            <i class="pi pi-search"></i>
+                        </InputGroupAddon>
+                        <InputText v-model="busqueda" type="text" placeholder="Buscar por formas farmaceuticas"
+                            class="search-input" />
+                    </InputGroup>
+                </div>
             </div>
         </div>
 
@@ -69,7 +72,8 @@ defineExpose({ obtenerLista })
                 </thead>
 
                 <tbody>
-                    <tr v-for="(formaFarmaceutica, index) in formasFarmaceuticasFiltrados" :key="String(formaFarmaceutica.id)">
+                    <tr v-for="(formaFarmaceutica, index) in formasFarmaceuticasFiltrados"
+                        :key="String(formaFarmaceutica.id)">
                         <td>{{ index + 1 }}</td>
                         <td>{{ formaFarmaceutica.nombre }}</td>
 

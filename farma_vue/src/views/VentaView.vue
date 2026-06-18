@@ -262,7 +262,8 @@ function resetVenta() {
                         </label>
 
                         <div class="d-flex gap-2">
-                            <InputText v-model="ciCliente" placeholder="Ingrese CI" style="flex: 1" />
+                            <InputText v-model="ciCliente" placeholder="Ingrese CI" style="flex: 1"
+                                class="search-input" />
 
                             <Button icon="pi pi-search" severity="secondary" outlined @click="buscarCliente" />
 
@@ -275,8 +276,7 @@ function resetVenta() {
                             Cliente / Razon Social
                         </label>
 
-                        <InputText :value="`${cliente?.nombre ?? ''}  ${cliente?.apellido ?? ''} `.trim()" disabled
-                            style="width: 100%" />
+                        <InputText :value="`${cliente?.nombre ?? ''} `.trim()" disabled style="width: 100%" />
                     </div>
 
                     <div class="col-md-6">
@@ -285,7 +285,7 @@ function resetVenta() {
                         </label>
 
                         <Select v-model="metodoPago" :options="metodosPago" placeholder="Seleccione método"
-                            style="width: 100%" />
+                            style="width: 100%" class="search-input" />
                     </div>
                 </div>
             </div>
