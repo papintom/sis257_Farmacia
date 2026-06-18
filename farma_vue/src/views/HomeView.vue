@@ -177,7 +177,7 @@ onMounted(() => {
               <tbody>
                 <tr v-for="lote in proximosVencer" :key="lote.id">
                   <td>{{ lote.medicamento.nombre }}</td>
-                  <td>{{ lote.codigoLote }}</td>
+                  <td>{{ lote.codigo }}</td>
                   <td>{{ new Date(lote.fechaVencimiento).toLocaleDateString() }}</td>
                   <td>{{ lote.stock }}</td>
                 </tr>

@@ -86,7 +86,7 @@ function rowClass(data: any) {
             <DataTable :value="lotesFiltrados" :rowClass="rowClass" paginator :rows="5">
                 <Column field="medicamento.nombre" header="Medicamento" />
 
-                <Column field="id" header="N° Lote" />
+                <Column field="codigo" header="N° Lote" />
 
                 <Column header="Fecha Vencimiento">
                     <template #body="{ data }">

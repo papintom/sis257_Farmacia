@@ -37,8 +37,7 @@ const medicamentoesFiltrados = computed(() => {
     (medicamento) =>
       medicamento.nombre.toLowerCase().includes(query) ||
       (medicamento.categoria?.nombre && medicamento.categoria.nombre.toLowerCase().includes(query)) ||
-      (medicamento.laboratorio?.nombre && medicamento.laboratorio.nombre.toLowerCase().includes(query)) ||
-      (medicamento.tipoReceta?.nombre && medicamento.tipoReceta.nombre.toLowerCase().includes(query)),
+      (medicamento.laboratorio?.nombre && medicamento.laboratorio.nombre.toLowerCase().includes(query))
   )
 })
 
@@ -90,8 +89,6 @@ defineExpose({ obtenerLista })
         <Column field="categoria.nombre" header="Categoría" sortable />
 
         <Column field="laboratorio.nombre" header="Laboratorio" sortable />
-
-        <Column field="tipoReceta.nombre" header="Tipo Receta" sortable />
 
         <Column header="Acciones">
           <template #body="{ data }">

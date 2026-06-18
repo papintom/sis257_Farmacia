@@ -36,9 +36,7 @@ export class MedicamentoService {
   if (createMedicamentoDto.idLaboratorio) {
     medicamento.laboratorio = { id: createMedicamentoDto.idLaboratorio } as any;
   }
-  if (createMedicamentoDto.idTipoReceta) {
-    medicamento.tipoReceta = { id: createMedicamentoDto.idTipoReceta } as any;
-  }
+ 
 
   return this.medicamentoRepository.save(medicamento);
 }
@@ -46,14 +44,14 @@ export class MedicamentoService {
   async findAll(): Promise<Medicamento[]> {
     return this.medicamentoRepository.find({
       order: { id: 'ASC' },
-      relations: ['categoria', 'formaFarmaceutica', 'laboratorio', 'tipoReceta'],
+      relations: ['categoria', 'formaFarmaceutica', 'laboratorio'],
     });
   }
 
   async findOne(id: number): Promise<Medicamento> {
     const medicamento = await this.medicamentoRepository.findOne({
       where: { id },
-      relations: ['categoria', 'formaFarmaceutica', 'laboratorio', 'tipoReceta'],
+      relations: ['categoria', 'formaFarmaceutica', 'laboratorio'],
     });
 
     if (!medicamento) {
@@ -75,11 +73,7 @@ export class MedicamentoService {
         ? ({ id: updateMedicamentoDto.idLaboratorio } as any)
         : null;
     }
-    if (updateMedicamentoDto.idTipoReceta !== undefined) {
-      medicamento.tipoReceta = updateMedicamentoDto.idTipoReceta
-        ? ({ id: updateMedicamentoDto.idTipoReceta } as any)
-        : null;
-    }
+    
 
     return this.medicamentoRepository.save(medicamento);
   }
