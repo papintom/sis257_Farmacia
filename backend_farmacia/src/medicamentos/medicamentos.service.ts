@@ -61,22 +61,34 @@ export class MedicamentoService {
     return medicamento;
   }
 
-  async update(
-    id: number,
-    updateMedicamentoDto: UpdateMedicamentoDto,
-  ): Promise<Medicamento> {
-    const medicamento = await this.findOne(id);
-    Object.assign(medicamento, updateMedicamentoDto);
+async update(
+  id: number,
+  updateMedicamentoDto: UpdateMedicamentoDto,
+): Promise<Medicamento> {
+  const medicamento = await this.findOne(id);
 
-    if (updateMedicamentoDto.idLaboratorio !== undefined) {
-      medicamento.laboratorio = updateMedicamentoDto.idLaboratorio
-        ? ({ id: updateMedicamentoDto.idLaboratorio } as any)
-        : null;
-    }
-    
+  Object.assign(medicamento, updateMedicamentoDto);
 
-    return this.medicamentoRepository.save(medicamento);
+  if (updateMedicamentoDto.idCategoria) {
+    medicamento.categoria = {
+      id: updateMedicamentoDto.idCategoria,
+    } as any;
   }
+
+  if (updateMedicamentoDto.idFormaFarmaceutica) {
+    medicamento.formaFarmaceutica = {
+      id: updateMedicamentoDto.idFormaFarmaceutica,
+    } as any;
+  }
+
+  if (updateMedicamentoDto.idLaboratorio !== undefined) {
+    medicamento.laboratorio = updateMedicamentoDto.idLaboratorio
+      ? ({ id: updateMedicamentoDto.idLaboratorio } as any)
+      : null;
+  }
+
+  return this.medicamentoRepository.save(medicamento);
+}
 
   async remove(id: number): Promise<Medicamento> {
     const medicamento = await this.findOne(id);
