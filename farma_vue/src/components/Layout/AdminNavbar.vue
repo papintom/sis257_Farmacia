@@ -42,13 +42,13 @@ const toggleTheme = () => {
 <template>
   <nav class="navbar admin-navbar navbar-expand bg-white">
     <div class="container-fluid px-3 px-lg-4">
-    <!--   <button class="sidebar-toggle" type="button" @click="$emit('toggle-sidebar')" aria-label="Toggle sidebar">
+      <!--   <button class="sidebar-toggle" type="button" @click="$emit('toggle-sidebar')" aria-label="Toggle sidebar">
         <span></span>
         <span></span>
         <span></span>
       </button> -->
-     <!--  BARRA DE BUSQUEDA -->
-    <!--   <form class="d-none d-md-flex ms-3 flex-grow-1" role="search" @submit.prevent>
+      <!--  BARRA DE BUSQUEDA -->
+      <!--   <form class="d-none d-md-flex ms-3 flex-grow-1" role="search" @submit.prevent>
         <input v-model="searchQuery" class="form-control search-input" type="search" 
           placeholder="Buscar usuarios, medicamentos, ventas..." aria-label="Search" />
       </form> -->
@@ -87,7 +87,9 @@ const toggleTheme = () => {
           <ul class="dropdown-menu dropdown-menu-end">
             <li><a class="dropdown-item" href="#profile">Perfil</a></li>
             <li><a class="dropdown-item" href="#settings">Configuración</a></li>
-            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <hr class="dropdown-divider" />
+            </li>
             <li class="px-2 pb-2">
               <button class="btn btn-primary btn-sm w-100" @click="handleLogout">
                 <i class="bi bi-box-arrow-right"></i>
