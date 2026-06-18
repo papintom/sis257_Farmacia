@@ -3,6 +3,38 @@ import AdminLayout from '@/components/Layout/AdminLayout.vue'
 import { onMounted, ref } from 'vue'
 import http from '@/plugins/axios'
 
+
+const stockBajo = ref<any[]>([])
+const proximosVencer = ref<any[]>([])
+
+async function obtenerStockBajo() {
+  try {
+    const response = await http.get('dashboard/stock-bajo')
+    stockBajo.value = response.data
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+async function obtenerProximosVencer() {
+  try {
+    const response = await http.get('dashboard/proximos-vencer')
+    proximosVencer.value = response.data
+  } catch (error) {
+    console.error(error)
+  }
+}
+const lotesVencidos = ref<any[]>([])
+
+async function obtenerLotesVencidos() {
+  try {
+    const response = await http.get('dashboard/lotes-vencidos')
+    lotesVencidos.value = response.data
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 const totales = ref({
   totalMedicamentos: 0,
   totalVentas: 0,
@@ -21,6 +53,9 @@ async function obtenerTotales() {
 
 onMounted(() => {
   obtenerTotales()
+  obtenerStockBajo()
+  obtenerProximosVencer()
+  obtenerLotesVencidos()
 })
 </script>
 
@@ -83,20 +118,111 @@ onMounted(() => {
       </div>
     </section>
 
-    <section class="panel mt-3">
-      <div class="panel-header">
-        <div>
-          <h2 class="h5 mb-1 section-title">
-            <i class="bi bi-graph-up-arrow" aria-hidden="true"></i>
-            <span>Información del Sistema</span>
-          </h2>
-          <p class="text-muted mb-0">Estado actual de la plataforma farmacéutica.</p>
+    <section class="row mt-3">
+      <div class="col-md-6">
+        <div class="panel">
+          <div class="panel-header">
+            <h2 class="h5 mb-0">
+              <i class="bi bi-exclamation-triangle-fill"></i>
+              Stock Bajo
+            </h2>
+          </div>
+
+          <div class="p-3">
+            <table class="table table-sm">
+              <thead>
+                <tr>
+                  <th>Medicamento</th>
+                  <th>Stock</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr v-for="lote in stockBajo" :key="lote.id">
+                  <td>{{ lote.medicamento.nombre }}</td>
+                  <td>{{ lote.stock }}</td>
+                </tr>
+
+                <tr v-if="stockBajo.length === 0">
+                  <td colspan="2" class="text-center">
+                    Sin registros
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
 
-      <div style="padding: 1.5rem; text-align: center; color: var(--admin-muted);">
-        <p style="margin: 0;">Sistema funcionando correctamente</p>
-        <p style="margin: 0.5rem 0 0; font-size: 0.875rem;">Todos los módulos disponibles</p>
+      <div class="col-md-6">
+        <div class="panel">
+          <div class="panel-header">
+            <h2 class="h5 mb-0">
+              <i class="bi bi-calendar-x"></i>
+              Próximos Vencimientos
+            </h2>
+          </div>
+
+          <div class="p-3">
+            <table class="table table-sm">
+              <thead>
+                <tr>
+                  <th>Medicamento</th>
+                  <th>Lote</th>
+                  <th>Vencimiento</th>
+                  <th>Stock</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr v-for="lote in proximosVencer" :key="lote.id">
+                  <td>{{ lote.medicamento.nombre }}</td>
+                  <td>{{ lote.codigoLote }}</td>
+                  <td>{{ new Date(lote.fechaVencimiento).toLocaleDateString() }}</td>
+                  <td>{{ lote.stock }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="panel mt-3">
+      <div class="panel-header">
+        <h2 class="h5 mb-0">
+          <i class="bi bi-x-circle-fill"></i>
+          Medicamentos Vencidos
+        </h2>
+      </div>
+
+      <div class="p-3">
+        <table class="table table-sm">
+          <thead>
+            <tr>
+              <th>Medicamento</th>
+              <th>Lote</th>
+              <th>Fecha Vencimiento</th>
+              <th>Stock</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr v-for="lote in lotesVencidos" :key="lote.id">
+              <td>{{ lote.medicamento.nombre }}</td>
+              <td>{{ lote.id }}</td>
+              <td>
+                {{ new Date(lote.fechaVencimiento).toLocaleDateString() }}
+              </td>
+              <td>{{ lote.stock }}</td>
+            </tr>
+
+            <tr v-if="lotesVencidos.length === 0">
+              <td colspan="4" class="text-center">
+                No existen medicamentos vencidos
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </section>
   </AdminLayout>

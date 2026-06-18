@@ -20,6 +20,8 @@ export class Lote {
   idMedicamento: number;
   @Column('integer', { name: 'id_proveedor' })
   idProveedor: number;
+  @Column({ name:'codigo',unique: true, length: 50 })
+codigo: string;
   @Column('integer', { name: 'stock' })
   stock: number;
   @Column('date', { name: 'fecha_vencimiento' })

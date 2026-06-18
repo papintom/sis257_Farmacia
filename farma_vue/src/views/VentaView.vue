@@ -145,7 +145,7 @@ async function guardarVenta() {
 
         const bodyVenta = {
 
-            idCliente: idCliente.value,
+            idCliente: idCliente.value || null,
 
             idUsuario: idUsuario.value,
 
@@ -258,7 +258,7 @@ function resetVenta() {
                 <div class="row g-3">
                     <div class="col-md-6">
                         <label class="form-label fw-semibold">
-                            CI Cliente
+                            CI / NIT
                         </label>
 
                         <div class="d-flex gap-2">
@@ -272,10 +272,10 @@ function resetVenta() {
 
                     <div class="col-md-6">
                         <label class="form-label fw-semibold">
-                            Cliente
+                            Cliente / Razon Social
                         </label>
 
-                        <InputText :value="`${cliente?.nombre ?? ''} ${cliente?.apellido ?? ''}`.trim()" disabled
+                        <InputText :value="`${cliente?.nombre ?? ''}  ${cliente?.apellido ?? ''} `.trim()" disabled
                             style="width: 100%" />
                     </div>
 

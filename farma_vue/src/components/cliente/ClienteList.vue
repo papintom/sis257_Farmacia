@@ -36,7 +36,7 @@ const clientesFiltrados = computed(() => {
     (cliente) =>
       cliente.ci.toLowerCase().includes(busqueda.value.toLowerCase()) ||
       cliente.nombre.toLowerCase().includes(busqueda.value.toLowerCase()) ||
-      cliente.apellido.toLowerCase().includes(busqueda.value.toLowerCase()) ||
+      //cliente.apellido.toLowerCase().includes(busqueda.value.toLowerCase()) ||
       cliente.telefono.toLowerCase().includes(busqueda.value.toLowerCase()) ||
       cliente.direccion.toLowerCase().includes(busqueda.value.toLowerCase()),
   )
@@ -69,7 +69,7 @@ defineExpose({ obtenerLista })
             <th>Nro.</th>
             <th>CI</th>
             <th>Nombre</th>
-            <th>Apellido</th>
+            <!--      <th>Apellido</th> -->
             <th>Teléfono</th>
             <th>Dirección</th>
             <th class="text-end">Acciones</th>
@@ -81,7 +81,7 @@ defineExpose({ obtenerLista })
             <td>{{ index + 1 }}</td>
             <td>{{ cliente.ci }}</td>
             <td>{{ cliente.nombre }}</td>
-            <td>{{ cliente.apellido }}</td>
+            <!--     <td>{{ cliente.apellido }}</td> -->
             <td>{{ cliente.telefono }}</td>
             <td>{{ cliente.direccion }}</td>
 

@@ -17,7 +17,11 @@ export class VentaService {
     Object.assign(venta, createVentaDto);
 
     venta.usuario = { id: createVentaDto.idUsuario } as any;
-    venta.cliente = { id: createVentaDto.idCliente } as any;
+    if (createVentaDto.idCliente) {
+    venta.cliente = {
+        id: createVentaDto.idCliente,
+    } as any;
+}
 
     return this.ventaRepository.save(venta);
   }

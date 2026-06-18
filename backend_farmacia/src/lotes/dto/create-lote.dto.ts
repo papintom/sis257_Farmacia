@@ -2,6 +2,8 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsDateString, IsDefined, IsInt, IsNotEmpty } from 'class-validator';
 
 export class CreateLoteDto {
+
+  
   @ApiProperty()
   @IsDefined({ message: 'El campo "medicamentoId" es obligatorio.' })
   @IsInt({ message: 'El campo "medicamentoId" debe ser un número entero.' })

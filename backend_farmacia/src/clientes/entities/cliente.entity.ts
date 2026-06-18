@@ -20,8 +20,9 @@ export class Cliente {
   @Column({ type: 'varchar', length: 100 })
   nombre: string;
 
-  @Column({ type: 'varchar', length: 100 })
+  /*@Column({ type: 'varchar', length: 100 })
   apellido: string;
+  */
 
   @Column({ type: 'varchar', length: 20, nullable: true })
   telefono: string;

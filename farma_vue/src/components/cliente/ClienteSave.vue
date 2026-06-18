@@ -47,7 +47,7 @@ async function handleSave() {
     const body = {
       ci: cliente.value.ci,
       nombre: cliente.value.nombre,
-      apellido: cliente.value.apellido,
+      /* apellido: cliente.value.apellido, */
       telefono: cliente.value.telefono,
       direccion: cliente.value.direccion,
     }
@@ -76,17 +76,17 @@ async function handleSave() {
   <div class="card flex justify-center">
     <Dialog v-model:visible="dialogVisible" :header="props.modoEdicion ? 'Editar' : 'Crear'" style="width: 25rem">
       <div class="flex items-center gap-4 mb-4">
-        <label for="ci" class="font-semibold w-3">CI</label>
+        <label for="ci" class="font-semibold w-3">CI / NIT</label>
         <InputText id="ci" v-model="cliente.ci" class="flex-auto" autocomplete="off" autofocus />
       </div>
       <div class="flex items-center gap-4 mb-4">
-        <label for="nombre" class="font-semibold w-3">Nombre</label>
+        <label for="nombre" class="font-semibold w-3">Nombre / Razon Social</label>
         <InputText id="nombre" v-model="cliente.nombre" class="flex-auto" autocomplete="off" />
       </div>
-      <div class="flex items-center gap-4 mb-4">
+      <!--   <div class="flex items-center gap-4 mb-4">
         <label for="apellido" class="font-semibold w-3">Apellido</label>
         <InputText id="apellido" v-model="cliente.apellido" class="flex-auto" autocomplete="off" />
-      </div>
+      </div> -->
       <div class="flex items-center gap-4 mb-4">
         <label for="telefono" class="font-semibold w-3">Telefono</label>
         <InputText id="telefono" v-model="cliente.telefono" class="flex-auto" autocomplete="off" />

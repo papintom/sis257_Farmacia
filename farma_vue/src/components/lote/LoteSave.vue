@@ -11,6 +11,7 @@ import Select from 'primevue/select'
 
 import Button from 'primevue/button'
 import Dialog from 'primevue/dialog'
+import InputText from 'primevue/inputtext'
 
 import { computed, ref, watch } from 'vue'
 
@@ -53,6 +54,13 @@ async function obtenerMedicamentos() {
 async function obtenerProveedores() {
   proveedores.value = await http.get('proveedores').then((res) => res.data)
 }
+async function obtenerCodigo() {
+  const response = await http.get('lotes/siguiente-codigo')
+
+  codigoPreview.value = response.data.codigo
+}
+
+const DIAS_MINIMOS_VIGENCIA = 30
 
 async function handleSave() {
   try {
@@ -82,6 +90,13 @@ async function handleSave() {
     alert(error?.response?.data?.message)
   }
 }
+const fechaMinima = ref(new Date())
+
+fechaMinima.value.setDate(
+  fechaMinima.value.getDate() + DIAS_MINIMOS_VIGENCIA
+)
+
+const codigoPreview = ref('')
 
 watch(
   () => props.mostrar,
@@ -89,6 +104,10 @@ watch(
     if (nuevoValor) {
       obtenerMedicamentos()
       obtenerProveedores()
+
+      if (!props.modoEdicion) {
+        obtenerCodigo()
+      }
 
       if (props.lote?.id) {
         lote.value = { ...props.lote }
@@ -108,6 +127,13 @@ watch(
   <div class="card flex justify-center">
     <Dialog v-model:visible="dialogVisible" :header="(props.modoEdicion ? 'Editar' : 'Crear') + ' Lote'"
       style="width: 25rem">
+      <div class="flex items-center gap-4 mb-4">
+        <label class="font-semibold w-3">
+          Código
+        </label>
+
+        <InputText v-model="codigoPreview" disabled class="flex-auto" />
+      </div>
       <div class="flex items-center gap-4 mb-4">
         <label for="medicamento" class="font-semibold w-3">
           Medicamento
@@ -139,7 +165,7 @@ watch(
           Fecha
         </label>
 
-        <DatePicker id="fechaVencimiento" v-model="lote.fechaVencimiento" class="flex-auto" showIcon />
+        <DatePicker v-model="lote.fechaVencimiento" :minDate="fechaMinima" showIcon class="flex-auto" />
       </div>
 
       <div class="flex justify-end gap-2">

@@ -72,13 +72,13 @@ onMounted(() => {
                     <h3>Datos Cliente</h3>
 
                     <p>
-                        <b>Nombre:</b>
+                        <b>Nombre/ Razon Social:</b>
                         {{ venta?.cliente?.nombre }}
-                        {{ venta?.cliente?.apellido }}
+                        <!--  {{ venta?.cliente?.apellido }} -->
                     </p>
 
                     <p>
-                        <b>CI:</b>
+                        <b>CI/NIT:</b>
                         {{ venta?.cliente?.ci }}
                     </p>
 
@@ -90,7 +90,12 @@ onMounted(() => {
 
                     <p>
                         <b>Fecha:</b>
-                        {{ new Date(venta?.fecha).toLocaleString() }}
+                        {{ new Date(venta?.fecha).toLocaleDateString('es-ES') }}
+                    </p>
+
+                    <p>
+                        <b>Hora:</b>
+                        {{ new Date(venta?.fecha).toLocaleTimeString('es-ES') }}
                     </p>
 
                     <p>
@@ -101,7 +106,7 @@ onMounted(() => {
                     <p>
                         <b>Atendido por:</b>
                         {{ venta?.usuario?.nombre }}
-                        {{ venta?.usuario?.apellido }}
+                        <!--  {{ venta?.usuario?.apellido }} -->
                     </p>
 
                 </div>

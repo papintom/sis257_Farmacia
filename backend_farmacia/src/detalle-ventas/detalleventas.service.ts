@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateDetalleVentaDto } from './dto/create.detalleventa.dto';
 import { UpdateDetalleVentaDto } from './dto/update.detalleventa.dto';
 import { DetalleVenta } from './entities/detalleventa.entity';
@@ -15,35 +15,59 @@ export class DetalleVentaService {
     private loteRepository: Repository<Lote>,
   ) {}
   async create(
-    createDetalleVentaDto: CreateDetalleVentaDto,
-  ): Promise<DetalleVenta> {
-    const detalle = new DetalleVenta();
+  createDetalleVentaDto: CreateDetalleVentaDto,
+): Promise<DetalleVenta> {
 
-    Object.assign(detalle, createDetalleVentaDto);
+  const lote = await this.loteRepository.findOne({
+  where: { id: createDetalleVentaDto.idLote }
+})
 
-    detalle.venta = {
-      id: createDetalleVentaDto.idVenta,
-    } as any;
+if (!lote) {
+  throw new NotFoundException('Lote no encontrado')
+}
 
-    detalle.lote = {
-      id: createDetalleVentaDto.idLote,
-    } as any;
+const hoy = new Date()
+hoy.setHours(0, 0, 0, 0)
 
-    const detalleGuardado = await this.detalleRepository.save(detalle);
+const fechaVencimiento = new Date(lote.fechaVencimiento)
+fechaVencimiento.setHours(0, 0, 0, 0)
 
-    // DESCONTAR STOCK
-    const lote = await this.loteRepository.findOneBy({
-      id: createDetalleVentaDto.idLote,
-    });
+if (fechaVencimiento < hoy) {
+  throw new ConflictException(
+    'No se puede vender un medicamento vencido'
+  )
+}
 
-    if (lote) {
-      lote.stock = lote.stock - createDetalleVentaDto.cantidad;
+  
 
-      await this.loteRepository.save(lote);
-    }
-
-    return detalleGuardado;
+  // VALIDAR STOCK
+  if (lote.stock < createDetalleVentaDto.cantidad) {
+    throw new BadRequestException(
+      `Stock insuficiente. Disponible: ${lote.stock}`,
+    );
   }
+
+  const detalle = new DetalleVenta();
+
+  Object.assign(detalle, createDetalleVentaDto);
+
+  detalle.venta = {
+    id: createDetalleVentaDto.idVenta,
+  } as any;
+
+  detalle.lote = {
+    id: createDetalleVentaDto.idLote,
+  } as any;
+
+  const detalleGuardado = await this.detalleRepository.save(detalle);
+
+  // DESCONTAR STOCK
+  lote.stock -= createDetalleVentaDto.cantidad;
+
+  await this.loteRepository.save(lote);
+
+  return detalleGuardado;
+}
 
   async findAll(): Promise<DetalleVenta[]> {
     return this.detalleRepository.find({

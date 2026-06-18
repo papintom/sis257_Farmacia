@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDateString, IsDefined, IsIn, IsInt } from 'class-validator';
+import { IsDateString, IsDefined, IsIn, IsInt, IsOptional } from 'class-validator';
 
 export class CreateVentaDto {
   @ApiProperty()
@@ -8,9 +8,9 @@ export class CreateVentaDto {
   readonly idUsuario: number;
 
   @ApiProperty()
-  @IsDefined({ message: 'El campo "id_cliente" es obligatorio.' })
-  @IsInt({ message: 'El campo "id_cliente" debe ser un número entero.' })
-  readonly idCliente: number;
+  @IsOptional()
+@IsInt()
+  readonly idCliente?: number;
 
   @ApiProperty()
   @IsDefined({ message: 'El campo "metodoPago" es obligatorio.' })

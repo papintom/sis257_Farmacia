@@ -65,11 +65,19 @@ defineExpose({ obtenerLista })
         tableStyle="min-width: 100%">
         <Column field="medicamento.nombre" header="Medicamento" sortable />
 
+        <Column field="codigo" header="Código Lote" sortable />
+
         <Column field="proveedor.nombre" header="Proveedor" sortable />
 
         <Column field="stock" header="Stock" sortable />
 
-        <Column field="fechaVencimiento" header="Fecha Vencimiento" sortable />
+        <Column header="Fecha Vencimiento" sortable>
+          <template #body="{ data }">
+            {{
+              new Date(data.fechaVencimiento).toLocaleDateString('es-BO')
+            }}
+          </template>
+        </Column>
 
         <Column header="Acciones">
           <template #body="{ data }">

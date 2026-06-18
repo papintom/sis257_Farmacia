@@ -24,6 +24,10 @@ export class LotesController {
   findAll() {
     return this.lotesService.findAll();
   }
+  @Get('siguiente-codigo')
+obtenerSiguienteCodigo() {
+  return this.lotesService.obtenerSiguienteCodigo();
+}
 
   @Get(':id')
   findOne(@Param('id') id: string) {
@@ -39,4 +43,5 @@ export class LotesController {
   remove(@Param('id') id: string) {
     return this.lotesService.remove(+id);
   }
+
 }

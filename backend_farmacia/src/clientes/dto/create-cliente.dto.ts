@@ -19,12 +19,13 @@ export class CreateClienteDto {
   })
   readonly nombre: string;
 
-  @ApiProperty({ description: 'Apellido del cliente', example: 'Pérez' })
+  /*@ApiProperty({ description: 'Apellido del cliente', example: 'Pérez' })
   @IsNotEmpty({ message: 'El campo "apellido" es obligatorio.' })
   @MaxLength(100, {
     message: 'El campo "apellido" no puede exceder los 100 caracteres.',
   })
   readonly apellido: string;
+  */
 
   @ApiProperty({ description: 'Teléfono del cliente', example: '77777777' })
   @MaxLength(20, {

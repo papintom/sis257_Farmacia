@@ -21,9 +21,12 @@ export class Venta {
   
   @Column({ name: 'id_usuario', type: 'int' })
   idUsuario: number;
-
-  @Column({ name: 'id_cliente', type: 'int' })
-  idCliente: number;
+@Column({
+  name: 'id_cliente',
+  type: 'int',
+  nullable: true,
+})
+idCliente?: number;
 
   @Column({ type: 'varchar', length: 20 })
   metodoPago: string;
@@ -41,9 +44,12 @@ export class Venta {
   @DeleteDateColumn({ name: 'fecha_eliminacion' })
   fechaEliminacion: Date;
 
-  @ManyToOne(() => Cliente, (cliente) => cliente.ventas)
-  @JoinColumn({ name: 'id_cliente', referencedColumnName: 'id' })
-  cliente: Cliente;
+
+
+@ManyToOne(() => Cliente, { nullable: true })
+@JoinColumn({ name: 'id_cliente' })
+cliente?: Cliente;
+
   @ManyToOne(() => Usuario, (usuario) => usuario.ventas)
   @JoinColumn({ name: 'id_usuario', referencedColumnName: 'id' })
   usuario: Usuario;

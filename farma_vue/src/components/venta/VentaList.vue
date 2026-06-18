@@ -18,9 +18,11 @@ const busqueda = ref('')
 
 
 async function obtenerVentas() {
-    ventas.value = await http
-        .get('ventas')
-        .then((res) => res.data)
+    const res = await http.get('ventas')
+
+    console.log(res.data)
+
+    ventas.value = res.data
 }
 const ventasFiltradas = computed(() => {
 
@@ -29,7 +31,7 @@ const ventasFiltradas = computed(() => {
         const texto = busqueda.value.toLowerCase()
 
         const nombreCompleto =
-            `${venta.cliente?.nombre ?? ''} ${venta.cliente?.apellido ?? ''}`
+            `${venta.cliente?.nombre ?? ''}`
                 .toLowerCase()
 
         const ci =
@@ -67,14 +69,21 @@ onMounted(() => {
             <DataTable :value="ventasFiltradas" paginator :rows="10" tableStyle="min-width: 100%">
                 <Column field="id" header="#" />
 
-                <Column field="fecha" header="Fecha" />
+                <Column header="Fecha">
+                    <template #body="{ data }">
+                        {{ new Date(data.fecha).toLocaleDateString('es-ES') }}
+                    </template>
+                </Column>
 
-                <Column field="cliente.ci" header="CI" />
+                <Column header="CI / NIT">
+                    <template #body="{ data }">
+                        {{ data.cliente?.ci ?? '-' }}
+                    </template>
+                </Column>
 
                 <Column header="Cliente">
                     <template #body="{ data }">
-                        {{ data.cliente.nombre }}
-                        {{ data.cliente.apellido }}
+                        {{ data.cliente?.nombre ?? '-' }}
                     </template>
                 </Column>
 
