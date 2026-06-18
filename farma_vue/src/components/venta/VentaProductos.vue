@@ -28,8 +28,10 @@ const lotesFiltrados = computed(() => {
     )
 })
 
-onMounted(() => {
-    obtenerLotes()
+onMounted(async () => {
+    await obtenerLotes()
+
+    console.log(JSON.stringify(lotes.value, null, 2))
 })
 const emit = defineEmits(['agregar'])
 
@@ -92,8 +94,10 @@ function rowClass(data: any) {
         <div class="table-responsive">
             <DataTable :value="lotesFiltrados" :rowClass="rowClass" paginator :rows="5">
                 <Column field="medicamento.nombre" header="Medicamento" />
-
+                <Column field="medicamento.concentracion" header="Concentracion" />
+                <Column field="medicamento.formaFarmaceutica.nombre" header="Forma" />
                 <Column field="codigo" header="N° Lote" />
+
 
                 <Column header="Fecha Vencimiento">
                     <template #body="{ data }">

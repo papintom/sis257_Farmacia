@@ -28,7 +28,7 @@ export class VentaService {
 
   async findAll(): Promise<Venta[]> {
     return this.ventaRepository.find({
-      relations: ['usuario', 'cliente'],
+      relations: ['usuario', 'cliente',],
       order: { id: 'ASC' },
     });
   }

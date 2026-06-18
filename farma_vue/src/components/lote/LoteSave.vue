@@ -139,8 +139,27 @@ watch(
           Medicamento
         </label>
 
-        <Select id="medicamento" v-model="lote.idMedicamento" :options="medicamentos" optionLabel="nombre"
-          optionValue="id" class="flex-auto" autofocus />
+        <Select id="medicamento" v-model="lote.idMedicamento" :options="medicamentos" optionValue="id"
+          class="flex-auto">
+          <template #option="slotProps">
+            {{ slotProps.option.nombre }}
+            - {{ slotProps.option.concentracion }}
+            - {{ slotProps.option.formaFarmaceutica?.nombre }}
+          </template>
+
+          <template #value="slotProps">
+            {{
+              slotProps.value
+                ? (() => {
+                  const med = medicamentos.find(m => m.id === slotProps.value)
+                  return med
+                    ? `${med.nombre} - ${med.concentracion} - ${med.formaFarmaceutica?.nombre ?? ''}`
+                    : ''
+                })()
+                : 'Seleccione un medicamento'
+            }}
+          </template>
+        </Select>
       </div>
 
       <div class="flex items-center gap-4 mb-4">

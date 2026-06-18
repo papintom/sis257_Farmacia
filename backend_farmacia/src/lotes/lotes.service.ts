@@ -76,24 +76,36 @@ if (fechaVencimiento < fechaMinima) {
     return this.loteRepository.save(lote);
   }
   async findAll(): Promise<Lote[]> {
-    return this.loteRepository.find({
-      order: { id: 'ASC' },
-      relations: ['medicamento', 'proveedor'],
-    });
-  }
+  return this.loteRepository.find({
+    order: { id: 'ASC' },
+    relations: [
+      'medicamento',
+      'medicamento.formaFarmaceutica',
+      'medicamento.categoria',
+      'medicamento.laboratorio',
+      'proveedor',
+    ],
+  });
+}
 
   async findOne(id: number): Promise<Lote> {
-    const lote = await this.loteRepository.findOne({
-      where: { id },
-      relations: ['medicamento', 'proveedor'],
-    });
+  const lote = await this.loteRepository.findOne({
+    where: { id },
+    relations: [
+      'medicamento',
+      'medicamento.formaFarmaceutica',
+      'medicamento.categoria',
+      'medicamento.laboratorio',
+      'proveedor',
+    ],
+  });
 
-    if (!lote) {
-      throw new NotFoundException(`Lote con id ${id} no encontrado`);
-    }
-
-    return lote;
+  if (!lote) {
+    throw new NotFoundException(`Lote con id ${id} no encontrado`);
   }
+
+  return lote;
+}
 
   async update(id: number, updateLoteDto: UpdateLoteDto): Promise<Lote> {
   const lote = await this.findOne(id);
